@@ -1,0 +1,77 @@
+#personal-card {
+  position: fixed;
+  top: 15%;
+  left: 3.5%;
+  background: linear-gradient(
+    to top,
+    #f4f8ff 0%,
+    #f4f8ff 65%,
+    #fefefedd 65%,
+    #fefefe44 100%
+  );
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 10px;
+  width: 20%;
+
+  overflow: visible;
+}
+
+#personal-card_name p {
+  position: relative;
+  top: 15px;
+  font-size: 1.5em;
+  text-align: center;
+}
+#personal-card_name img {
+  width: 60%;
+  border-radius: 10%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -30%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#personal-card_info {
+  margin-top: 25%;
+  margin-bottom: auto;
+  text-align: left;
+}
+
+#personal-card_info img {
+  width: 100%;
+  border-radius: 10%;
+  display: block;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#personal-card_info td {
+  padding-right: 10px;
+  padding-left: 5px;
+}
+
+#personal-card_info table {
+  margin-left: 5%;
+}
+
+#personal-card_info button {
+  background: #1065ff;
+  border-radius: 999px;
+  box-shadow: #1065ff 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 24px;
+  opacity: 1;
+  padding: 8px 18px;
+  border: 0;
+  margin-top: 15px;
+  margin-left: 20%;
+}
+.cardTdImg {
+  width: 45px;
+}

@@ -3,47 +3,36 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f1f2f4;
+  background-image: url("/layered-waves-haikei.svg"),
+    url("/layered-waves-haikei2.svg");
+  background-repeat: repeat-y;
+  background-size: 40%;
+  background-position: left top, right top;
 }
 
-#personal-card {
-  position: fixed;
-  top: 10%;
-  left: 5%;
+footer {
+  position: relative;
+  left: 0;
+  bottom: -90px;
+  width: 100%;
+  height: 50px;
   background: linear-gradient(
     to top,
-    #f4f8ff 0%,
-    #f4f8ff 65%,
-    #fefefe 65%,
-    #fefefe 100%
+    #fefefeff 0%,
+    #fefefeee 75%,
+    #fefefeee 75%,
+    #fefefe00 100%
   );
-  border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 10px;
-  margin: 10px;
-  width: 20%;
-  height: 70%;
+  padding-top: 20px;
+  padding-bottom: 0px;
+  margin-top: 50px;
 }
 
-#personal-card_name p {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-#work-card {
+footer p {
+  display: none; /* Hide the footer text, for now */
+  margin: 0;
   position: absolute;
-  top: 10%;
-  right: 5%;
-  background: linear-gradient(
-    to top,
-    #f4f8ff 0%,
-    #f4f8ff 75%,
-    #fefefe 75%,
-    #fefefe 100%
-  );
-  border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 10px;
-  margin: 10px;
-  width: 60%;
-  height: 1000px;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

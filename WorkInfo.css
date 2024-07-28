@@ -1,0 +1,42 @@
+#work-card {
+  position: relative;
+  top: 140px;
+  left: 32%;
+  background: linear-gradient(to bottom, #fefefeff 20%, #fefefe00 100%);
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 10px;
+  margin-bottom: 100px;
+  width: 60%;
+  height: 1000px;
+}
+.tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-items: center;
+  width: 100%;
+  bottom: 50px;
+  margin: 0;
+  padding: 0;
+  border: thin green solid;
+}
+.tabs button {
+  background-color: #fefefe;
+  border: none;
+  border-radius: 20px 20px 20px 20px;
+  cursor: pointer;
+  width: 95%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.tabs button:hover {
+  background-color: #1065ff;
+  color: #fefefe;
+  transform: rotate(360deg);
+}
+
+.tabContent {
+  padding-left: 10px;
+}
