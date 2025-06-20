@@ -9,9 +9,9 @@
     #fefefedd 65%,
     #fefefe44 100%
   );
-  border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 10px;
+  border-radius: 1.25rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
+  padding: 0.625rem;
   width: 20%;
 
   overflow: visible;
@@ -19,8 +19,8 @@
 
 #personal-card_name p {
   position: relative;
-  top: 15px;
-  font-size: 1.5em;
+  top: 0.9375;
+  font-size: 1.5rem;
   text-align: center;
 }
 #personal-card_name img {
@@ -30,7 +30,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: -30%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
 }
 
 #personal-card_info {
@@ -45,12 +45,12 @@
   display: block;
   margin-top: 5%;
   margin-bottom: 10%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
 }
 
 #personal-card_info td {
-  padding-right: 10px;
-  padding-left: 5px;
+  padding-right: 0.625rem;
+  padding-left: 0.3125rem;
 }
 
 #personal-card_info table {
@@ -59,19 +59,19 @@
 
 #personal-card_info button {
   background: #1065ff;
-  border-radius: 999px;
-  box-shadow: #1065ff 0 10px 20px -10px;
+  border-radius: 62.4375rem;
+  box-shadow: #1065ff 0 0.625rem 1.25rem -0.625rem;
   box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
   opacity: 1;
-  padding: 8px 18px;
+  padding: 0.5rem 1.125rem;
   border: 0;
-  margin-top: 15px;
+  margin-top: 0.9375rem;
   margin-left: 20%;
 }
 .cardTdImg {
-  width: 45px;
+  width: 2.8125rem;
 }
