@@ -1,38 +1,51 @@
+html {
+  font-size: 16px; /* 1rem = 16px baseline, adjust globally if needed */
+}
+
 body {
   font-family: "Roboto", sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f1f2f4;
+  background-color: #f0f1f3;
+
   background-image: url("/layered-waves-haikei.svg"),
     url("/layered-waves-haikei2.svg");
   background-repeat: repeat-y;
   background-size: 40%;
   background-position: left top, right top;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
 }
 
+/* Footer sits at the bottom using Flex Grow + Margin Auto */
 footer {
-  position: relative;
-  left: 0;
-  bottom: -2em;
   width: 100%;
-  height: 1.5em;
+  height: 3rem;
   background: linear-gradient(
     to top,
     #fefefeff 0%,
-    #fefefeee 15%,
-    #fefefeee 15%,
-    #fefefe00 75%
+    #fefefeee 1%,
+    #fefefeee 1%,
+    #fefefe00 15%
   );
-  padding-top: 20px;
-  padding-bottom: 0px;
-  margin-top: 50px;
+
+  padding-top: 1.25rem;
+  padding-bottom: 0;
+  margin-top: auto; /* pushes footer to bottom of page if content is short */
+  position: relative;
 }
 
+/* Hidden text, but ready for future use */
 footer p {
-  display: none; /* Hide the footer text, for now */
+  display: none;
   margin: 0;
   position: absolute;
   bottom: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 50%);
+  font-size: 0.875rem;
 }

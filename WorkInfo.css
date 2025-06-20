@@ -1,42 +1,53 @@
 #work-card {
   position: relative;
-  top: 140px;
-  left: 32%;
+  /* margin: 8.75rem auto 6.25rem auto;  */
   background: linear-gradient(to bottom, #fefefeff 20%, #fefefe00 100%);
-  border-radius: 20px 20px 20px 20px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  margin: 10px;
-  margin-bottom: 100px;
+  border-radius: 1.25rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
   width: 60%;
-  height: 1000px;
+  height: 62rem; /* 1000px = 62.5rem */
+  padding: 1rem;
+  margin-left: auto;
+  margin-top: 10%;
+  margin-right: 10%;
 }
+
 .tabs {
-  position: relative;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  position: relative;
+  top: -4rem;
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* cleaner than "auto auto auto auto" */
   justify-items: center;
   width: 100%;
-  bottom: 50px;
   margin: 0;
   padding: 0;
-  border: thin green solid;
+  /* border: 0.0625rem solid green; */
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
+
 .tabs button {
   background-color: #fefefe;
   border: none;
-  border-radius: 20px 20px 20px 20px;
+  border-radius: 1.25rem;
   cursor: pointer;
   width: 95%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 0.625rem 0;
+  font-size: 1rem;
+  transition: all 0.4s ease;
+  box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
 }
 
 .tabs button:hover {
-  background-color: #1065ff;
-  color: #fefefe;
-  transform: rotate(360deg);
+  background: #004fcc;
+  color: #f1f1f1;
+  transform: translateY(-1px);
 }
 
 .tabContent {
-  padding-left: 10px;
+  padding-left: 0.625rem; /* 10px */
+  font-size: 1rem;
 }

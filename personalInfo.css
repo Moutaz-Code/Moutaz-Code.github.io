@@ -1,7 +1,9 @@
 #personal-card {
+  display: flex;
   position: fixed;
   top: 15%;
   left: 3.5%;
+  width: 20%;
   background: linear-gradient(
     to top,
     #f4f8ff 0%,
@@ -12,49 +14,54 @@
   border-radius: 1.25rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
   padding: 0.625rem;
-  width: 20%;
-
   overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center children horizontally */
+}
+
+#personal-card_name {
+  width: 100%;
+  text-align: center;
 }
 
 #personal-card_name p {
-  position: relative;
-  top: 0.9375;
   font-size: 1.5rem;
-  text-align: center;
+  margin-top: 0.9375rem;
 }
+
 #personal-card_name img {
   width: 60%;
   border-radius: 10%;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -30%;
+  margin: -30% auto 0 auto; /* top margin pulls it upward, centered horizontally */
   box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
 }
 
 #personal-card_info {
+  width: 100%;
   margin-top: 25%;
-  margin-bottom: auto;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers content horizontally */
 }
 
 #personal-card_info img {
   width: 100%;
   border-radius: 10%;
-  display: block;
   margin-top: 5%;
   margin-bottom: 10%;
   box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
 }
 
+#personal-card_info table {
+  margin-left: 5%;
+  align-self: flex-start;
+}
+
 #personal-card_info td {
   padding-right: 0.625rem;
   padding-left: 0.3125rem;
-}
-
-#personal-card_info table {
-  margin-left: 5%;
 }
 
 #personal-card_info button {
@@ -70,8 +77,16 @@
   padding: 0.5rem 1.125rem;
   border: 0;
   margin-top: 0.9375rem;
-  margin-left: 20%;
+  width: fit-content;
+
+  transition: background 0.2s ease, transform 0.2s ease;
 }
+
+#personal-card_info button:hover {
+  background: #004fcc;
+  transform: translateY(-1px);
+}
+
 .cardTdImg {
   width: 2.8125rem;
 }
