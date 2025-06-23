@@ -1,12 +1,12 @@
 #work-card {
   position: relative;
   /* margin: 8.75rem auto 6.25rem auto;  */
-  background: linear-gradient(to bottom, #fefefeff 20%, #fefefe00 100%);
+  background: whitesmoke;
   border-radius: 1.25rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0rem 0.1875rem 0.5rem;
   width: 60%;
   height: 62rem; /* 1000px = 62.5rem */
-  padding: 1rem;
+  padding: 0.5rem;
   margin-left: auto;
   margin-top: 10%;
   margin-right: 10%;
@@ -16,17 +16,12 @@
   display: grid;
   position: relative;
   top: -4rem;
-  grid-template-columns: repeat(
-    4,
-    1fr
-  ); /* cleaner than "auto auto auto auto" */
+  grid-template-columns: repeat(4, 1fr);
   justify-items: center;
   width: 100%;
   margin: 0;
   padding: 0;
-  /* border: 0.0625rem solid green; */
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
 }
 
 .tabs button {
@@ -47,7 +42,16 @@
   transform: translateY(-1px);
 }
 
+.tabContentContainer {
+  position: relative;
+  top: -3rem;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 0.625rem;
+}
+
 .tabContent {
-  padding-left: 0.625rem; /* 10px */
+  padding-right: 1.5rem;
   font-size: 1rem;
 }
