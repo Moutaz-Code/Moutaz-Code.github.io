@@ -1,0 +1,34 @@
+{
+  "name": "moutaz-code.github.io",
+  "version": "1.0.0",
+  "description": "My Personal Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moutaz-Code/Moutaz-Code.github.io.git"
+  },
+  "keywords": [
+    "Personal",
+    "Portfolio",
+    "resume",
+    "cv"
+  ],
+  "author": "Motaz Pharaon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Moutaz-Code/Moutaz-Code.github.io/issues"
+  },
+  "homepage": "https://github.com/Moutaz-Code/Moutaz-Code.github.io#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
