@@ -1,0 +1,29 @@
+---
+import ButtonLink from "../primitives/ButtonLink.astro";
+import { profileConfig } from "../../../app/profileConfig";
+---
+
+<section class="py-16 sm:py-24">
+  <p
+    class="text-sm font-medium tracking-wide uppercase text-(--color-accent) mb-3"
+  >
+    {profileConfig.role}
+  </p>
+  <h1
+    class="text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4"
+  >
+    Hi, I'm {profileConfig.name}
+  </h1>
+  <p class="text-lg text-(--color-text-muted) max-w-xl mb-8">
+    {profileConfig.pitch}
+  </p>
+  <div class="flex gap-4">
+    {
+      profileConfig.ctas.map((cta) => (
+        <ButtonLink href={cta.href} variant={cta.variant}>
+          {cta.label}
+        </ButtonLink>
+      ))
+    }
+  </div>
+</section>

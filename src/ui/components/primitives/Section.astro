@@ -1,0 +1,23 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  class?: string;
+}
+
+const { title, subtitle, class: className } = Astro.props;
+---
+
+<section class:list={["py-12", className]}>
+  {
+    title && (
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold tracking-tight">{title}</h2>
+        {subtitle && (
+          <p class="mt-1 text-(--color-text-muted)">{subtitle}</p>
+        )}
+      </div>
+    )
+  }
+  <slot />
+</section>

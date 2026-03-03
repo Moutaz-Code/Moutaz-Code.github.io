@@ -1,0 +1,116 @@
+---
+import { contentSource } from "../../app/content";
+import BaseLayout from "../../ui/layouts/BaseLayout.astro";
+import TagChip from "../../ui/components/content/TagChip.astro";
+import StatusBadge from "../../ui/components/content/StatusBadge.astro";
+import MediaGallery from "../../ui/components/content/MediaGallery.astro";
+import ProjectCard from "../../ui/components/content/ProjectCard.astro";
+import Prose from "../../ui/components/content/Prose.astro";
+import ButtonLink from "../../ui/components/primitives/ButtonLink.astro";
+
+export async function getStaticPaths() {
+  const projects = await contentSource.listProjects();
+  return projects.map((p) => ({
+    params: { slug: p.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const project = await contentSource.getProjectBySlug(slug!);
+if (!project) return Astro.redirect("/404");
+
+const { title, summary, status, tags, links, media, content, dateStart, dateEnd } = project;
+const { Content } = content;
+
+// Related projects: share at least one tag, exclude current, max 3
+const allProjects = await contentSource.listProjects();
+const relatedProjects = allProjects
+  .filter((p) => p.slug !== slug && p.tags.some((t) => tags.includes(t)))
+  .slice(0, 3);
+---
+
+<BaseLayout title={title} description={summary} ogImage={project.primaryImage?.src}>
+  <article class="py-8">
+    <div class="mb-8">
+      <a
+        href="/projects"
+        class="text-sm text-(--color-text-muted) hover:text-(--color-accent) no-underline"
+      >
+        &larr; Back to Projects
+      </a>
+    </div>
+
+    <h1 class="text-3xl font-bold tracking-tight mb-3">{title}</h1>
+
+    <div class="flex items-center gap-3 mb-6 flex-wrap">
+      <StatusBadge status={status} />
+      <div class="flex gap-2 flex-wrap">
+        {tags.map((tag) => <TagChip tag={tag} />)}
+      </div>
+    </div>
+
+    <!-- Media gallery -->
+    {
+      media.length > 0 && (
+        <div class="mb-8">
+          <MediaGallery items={media} />
+        </div>
+      )
+    }
+
+    <!-- Links -->
+    {
+      links.length > 0 && (
+        <div class="flex gap-3 flex-wrap mb-8">
+          {links.map((link) => (
+            <ButtonLink href={link.url} variant="secondary" external>
+              {link.label}
+            </ButtonLink>
+          ))}
+        </div>
+      )
+    }
+
+    <!-- MDX body -->
+    <Prose>
+      <Content />
+    </Prose>
+
+    <!-- Browse more -->
+    {
+      tags.length > 0 && (
+        <div class="mt-10 pt-6 border-t border-(--color-border)">
+          <p class="text-sm text-(--color-text-muted) mb-3">
+            Browse more with these tags:
+          </p>
+          <div class="flex gap-2 flex-wrap">
+            {tags.map((tag) => (
+              <TagChip tag={tag} href={`/projects?tag=${tag}`} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      relatedProjects.length > 0 && (
+        <div class="mt-10 pt-6 border-t border-(--color-border)">
+          <h2 class="text-lg font-semibold mb-4">Related Projects</h2>
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedProjects.map((rp) => (
+              <ProjectCard
+                title={rp.title}
+                slug={rp.slug}
+                summary={rp.summary}
+                tags={rp.tags}
+                status={rp.status}
+                featured={rp.featured}
+                primaryImage={rp.primaryImage}
+              />
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </article>
+</BaseLayout>

@@ -1,0 +1,89 @@
+---
+import BaseLayout from "../ui/layouts/BaseLayout.astro";
+import { siteConfig } from "../app/siteConfig";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch — I'd love to hear from you."
+>
+  <section class="py-8">
+    <h1 class="text-3xl font-bold tracking-tight mb-2">Contact</h1>
+    <p class="text-(--color-text-muted) mb-8">
+      Have a question, project idea, or just want to say hi? Reach out through
+      any of the channels below.
+    </p>
+
+    <div class="space-y-4 mb-12">
+      {
+        siteConfig.socialLinks.email && (
+          <a
+            href={siteConfig.socialLinks.email}
+            class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
+          >
+            <span class="text-sm font-medium">Email</span>
+            <span class="text-sm text-(--color-text-muted)">
+              {siteConfig.socialLinks.email.replace("mailto:", "")}
+            </span>
+          </a>
+        )
+      }
+      {
+        siteConfig.socialLinks.github && (
+          <a
+            href={siteConfig.socialLinks.github}
+            class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
+          >
+            <span class="text-sm font-medium">GitHub</span>
+            <span class="text-sm text-(--color-text-muted)">
+              {siteConfig.socialLinks.github}
+            </span>
+          </a>
+        )
+      }
+      {
+        siteConfig.socialLinks.linkedin && (
+          <a
+            href={siteConfig.socialLinks.linkedin}
+            class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
+          >
+            <span class="text-sm font-medium">LinkedIn</span>
+            <span class="text-sm text-(--color-text-muted)">
+              {siteConfig.socialLinks.linkedin}
+            </span>
+          </a>
+        )
+      }
+    </div>
+
+    <!-- Contact form placeholder -->
+    <div class="rounded-lg border border-(--color-border) p-6">
+      <h2 class="text-lg font-semibold mb-2">Send a Message</h2>
+      <p class="text-sm text-(--color-text-muted) mb-4">
+        Contact form coming in a later phase. For now, use the links above.
+      </p>
+      <div class="space-y-4 opacity-50 pointer-events-none select-none">
+        <input
+          type="text"
+          placeholder="Your name"
+          class="w-full rounded-lg border border-(--color-border) px-4 py-2 text-sm"
+        />
+        <input
+          type="email"
+          placeholder="Your email"
+          class="w-full rounded-lg border border-(--color-border) px-4 py-2 text-sm"
+        />
+        <textarea
+          placeholder="Your message"
+          rows="4"
+          class="w-full rounded-lg border border-(--color-border) px-4 py-2 text-sm"
+        ></textarea>
+        <button
+          class="px-5 py-2 rounded-lg bg-(--color-accent) text-white text-sm font-medium"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

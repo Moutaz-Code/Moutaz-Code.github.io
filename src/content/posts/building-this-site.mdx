@@ -1,0 +1,48 @@
+---
+title: "Building this portfolio site"
+excerpt: "How I structured an Astro site to stay modular and content-driven."
+tags: ["astro", "tailwind", "architecture"]
+publishedAt: 2026-03-03
+coverImage: "/uploads/posts/portfolio-cover.png"
+---
+
+## Why Astro?
+
+When I set out to build a portfolio site, I wanted something that was fast by
+default, content-first, and didn't force me into a heavy client-side framework.
+Astro checks all those boxes — it ships zero JavaScript unless you opt in.
+
+## The Architecture
+
+The key decision was to keep pages decoupled from the content backend. Pages call
+a port interface (`ContentSource`), which is implemented by an adapter that reads
+Astro Content Collections today but could be swapped for a database or headless
+CMS later.
+
+```ts
+// Domain port — framework-agnostic
+export interface ContentSource {
+  getProjects(): Promise<Project[]>;
+  getPosts(): Promise<Post[]>;
+}
+```
+
+## Tailwind v4
+
+Tailwind v4 drops the JavaScript config file in favor of CSS-first configuration.
+Design tokens live in `@theme` blocks inside your CSS:
+
+```css
+@theme {
+  --color-accent: #2563eb;
+  --color-surface: #fafafa;
+}
+```
+
+This felt cleaner than the old `tailwind.config.js` approach and keeps everything
+in one place.
+
+## What's Next
+
+The next steps are wiring up a Git-backed CMS (Sveltia) and adding a dark mode
+toggle. Stay tuned.

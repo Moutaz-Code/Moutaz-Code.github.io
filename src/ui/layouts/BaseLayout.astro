@@ -1,0 +1,132 @@
+---
+import "../../styles/global.css";
+import { siteConfig } from "../../app/siteConfig";
+import HeaderNav from "../components/HeaderNav.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description = `${siteConfig.siteName} — ${siteConfig.siteTagline}`,
+  ogImage,
+  ogType = "website",
+  noIndex = false,
+} = Astro.props;
+
+const pageTitle = title
+  ? `${title} | ${siteConfig.siteName}`
+  : `${siteConfig.siteName} | ${siteConfig.siteTagline}`;
+
+const siteBase = Astro.site?.href ?? siteConfig.siteUrl;
+const canonicalUrl = new URL(Astro.url.pathname, siteBase).href;
+const resolvedOgImage = new URL(
+  ogImage ?? siteConfig.defaultOgImage,
+  siteBase,
+).href;
+const currentPath = Astro.url.pathname;
+
+const socialEntries = Object.entries(siteConfig.socialLinks).filter(
+  ([, url]) => url != null,
+) as [string, string][];
+
+const socialLabels: Record<string, string> = {
+  github: "GitHub",
+  linkedin: "LinkedIn",
+  email: "Email",
+  itch: "itch.io",
+  shadertoy: "Shadertoy",
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={resolvedOgImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    {siteConfig.twitterHandle && (
+      <meta name="twitter:site" content={siteConfig.twitterHandle} />
+    )}
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title={`${siteConfig.siteName} Blog RSS`} href="/rss.xml" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- Skip to content -->
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-(--color-accent) focus:text-white focus:rounded-lg focus:no-underline"
+    >
+      Skip to content
+    </a>
+
+    <!-- Header -->
+    <header class="border-b border-(--color-border)">
+      <div
+        class="mx-auto max-w-4xl px-6 py-4 flex items-center justify-between"
+      >
+        <a
+          href="/"
+          class="text-lg font-semibold no-underline text-(--color-text)"
+        >
+          {siteConfig.siteName}
+        </a>
+        <HeaderNav currentPath={currentPath} items={siteConfig.navItems} />
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main id="main" class="flex-1 mx-auto w-full max-w-4xl px-6 py-12">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-(--color-border)">
+      <div
+        class="mx-auto max-w-4xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-(--color-text-muted)"
+      >
+        <p>
+          &copy; {new Date().getFullYear()}
+          {siteConfig.siteName}. All rights reserved.
+        </p>
+        <div class="flex gap-4">
+          {
+            socialEntries.map(([key, url]) => (
+              <a
+                href={url}
+                class="no-underline text-(--color-text-muted) hover:text-(--color-text)"
+              >
+                {socialLabels[key] ?? key}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+---
+import { contentSource } from "../app/content";
+import BaseLayout from "../ui/layouts/BaseLayout.astro";
+import Hero from "../ui/components/home/Hero.astro";
+import FeaturedProjects from "../ui/components/home/FeaturedProjects.astro";
+import SkillsStrip from "../ui/components/home/SkillsStrip.astro";
+import ExperienceSection from "../ui/components/home/ExperienceSection.astro";
+import LatestPosts from "../ui/components/home/LatestPosts.astro";
+import ContactCTA from "../ui/components/home/ContactCTA.astro";
+
+const featuredProjects = await contentSource.listProjects({ featuredOnly: true, limit: 3 });
+const latestPosts = await contentSource.listPosts({ limit: 2 });
+---
+
+<BaseLayout>
+  <Hero />
+  <FeaturedProjects projects={featuredProjects} />
+  <SkillsStrip />
+  <ExperienceSection />
+  <LatestPosts posts={latestPosts} />
+  <ContactCTA />
+</BaseLayout>

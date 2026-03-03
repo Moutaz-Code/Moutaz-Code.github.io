@@ -1,0 +1,45 @@
+---
+title: "Notes on clean architecture in frontend apps"
+excerpt: "Applying ports-and-adapters thinking to UI projects — what works and what doesn't."
+tags: ["architecture", "typescript"]
+publishedAt: 2025-12-20
+---
+
+## The Problem
+
+Most frontend projects start clean but gradually accumulate framework-specific
+code in places where it doesn't belong. API calls leak into components, business
+rules hide inside event handlers, and testing becomes painful.
+
+## Ports and Adapters
+
+The core idea is simple: define interfaces (ports) for external concerns, then
+implement them with concrete adapters. Your domain logic and UI depend on the
+ports, never on the adapters directly.
+
+```
+domain/
+  ports/ContentSource.ts   ← interface
+adapters/
+  content-mdx/             ← implementation
+pages/
+  index.astro              ← uses port, not adapter
+```
+
+## Does It Work for Frontend?
+
+Yes, with caveats. Over-abstracting a small app creates more files than value.
+The sweet spot is abstracting at **system boundaries** — data fetching, storage,
+and external services — while keeping UI components straightforward.
+
+## Rules of Thumb
+
+1. If you can swap the implementation without changing consumers, the boundary is
+   in the right place.
+2. Domain types should never import framework code.
+3. Keep the composition root small and obvious.
+
+## Further Reading
+
+- Alistair Cockburn's original hexagonal architecture paper
+- Mark Seemann's *Dependency Injection in .NET*

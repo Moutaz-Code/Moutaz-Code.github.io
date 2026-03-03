@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../ui/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Resume"
+  description="Download my resume or view it online."
+>
+  <section class="py-8">
+    <h1 class="text-3xl font-bold tracking-tight mb-2">Resume</h1>
+    <p class="text-(--color-text-muted) mb-8">
+      Download a copy of my resume or view the highlights below.
+    </p>
+
+    <div class="mb-10">
+      <a
+        href="/resume.pdf"
+        class="inline-flex items-center px-5 py-2.5 rounded-lg bg-(--color-accent) text-white font-medium no-underline hover:bg-(--color-accent-hover) transition-colors"
+      >
+        Download PDF
+      </a>
+      <p class="text-xs text-(--color-text-muted) mt-2">
+        PDF not uploaded yet — placeholder link.
+      </p>
+    </div>
+
+    <!-- Resume highlights -->
+    <div class="space-y-8">
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Education</h2>
+        <div class="border-l-2 border-(--color-border) pl-4">
+          <p class="font-medium">B.S. Computer Science</p>
+          <p class="text-sm text-(--color-text-muted)">
+            University Name &middot; 2022 – 2026
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Experience</h2>
+        <div class="border-l-2 border-(--color-border) pl-4 space-y-4">
+          <div>
+            <p class="font-medium">Software Engineering Intern</p>
+            <p class="text-sm text-(--color-text-muted)">
+              Company Name &middot; Summer 2025
+            </p>
+            <p class="text-sm text-(--color-text-muted) mt-1">
+              Worked on internal tooling and API development.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Skills</h2>
+        <p class="text-sm text-(--color-text-muted)">
+          TypeScript, JavaScript, C#, Python, React, Astro, Node.js, Unity,
+          Tailwind CSS, .NET, Git, WebGL
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://moutaz-code.github.io/sitemap-index.xml

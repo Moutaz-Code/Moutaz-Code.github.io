@@ -1,0 +1,50 @@
+---
+title: "Portfolio Site"
+summary: "This very site — a static-first portfolio built with Astro, Tailwind, and MDX."
+tags: ["astro", "tailwind", "typescript", "architecture"]
+status: "ongoing"
+featured: false
+dateStart: 2026-02-01
+links:
+  - label: "GitHub"
+    url: "https://github.com/Moutaz-Code/Moutaz-Code.github.io"
+  - label: "Live Site"
+    url: "https://moutaz-code.github.io"
+media:
+  - type: "image"
+    src: "/uploads/projects/portfolio-1.png"
+    alt: "Homepage screenshot"
+---
+
+## Overview
+
+The site you're looking at right now. It's built with a ports-and-adapters
+architecture so the content backend (currently MDX via Astro Content Collections)
+can be swapped later without touching page code.
+
+## Tech Stack
+
+- **Astro** — Static site generation
+- **Tailwind CSS v4** — Utility-first styling
+- **TypeScript** — Strict mode throughout
+- **MDX** — Content authoring with component support
+- **Vercel** — Deployment
+
+## Key Features
+
+- Portfolio-first homepage with featured projects
+- Blog with tag-based navigation
+- Server-rendered active nav states (zero JS)
+- Clean domain model layer decoupled from framework
+
+## Challenges
+
+Designing the module boundaries early (domain, adapters, UI) took deliberate
+effort but pays off as the site grows. Keeping pages framework-agnostic while
+still using Astro's content layer required a clear adapter pattern.
+
+## What's Next
+
+- Sveltia CMS integration for content editing
+- Dark mode toggle
+- RSS feed

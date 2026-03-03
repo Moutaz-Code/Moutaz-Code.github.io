@@ -1,0 +1,49 @@
+---
+title: "ShaderFoundry"
+summary: "A browser-based GLSL shader playground with live preview and sharing."
+tags: ["webgl", "glsl", "typescript"]
+status: "completed"
+featured: true
+dateStart: 2025-06-01
+dateEnd: 2025-09-15
+links:
+  - label: "GitHub"
+    url: "https://github.com/Moutaz-Code/shaderfoundry"
+  - label: "Live Demo"
+    url: "https://shaderfoundry.example.com"
+media:
+  - type: "image"
+    src: "/uploads/projects/shaderfoundry-1.png"
+    alt: "Gallery view with shader thumbnails"
+---
+
+## Overview
+
+ShaderFoundry is a browser-based GLSL shader playground. Write fragment shaders
+in a Monaco-powered editor, see results in real time on a WebGL canvas, and share
+your creations via URL.
+
+## Tech Stack
+
+- **TypeScript** — Application logic
+- **WebGL 2** — Shader rendering
+- **Monaco Editor** — Code editing with GLSL syntax highlighting
+- **Vite** — Build tooling
+
+## Key Features
+
+- Live preview with configurable uniforms (time, resolution, mouse)
+- Built-in shader gallery with community contributions
+- Shareable URLs with encoded shader source
+- Fullscreen rendering mode
+
+## Challenges
+
+Handling shader compilation errors gracefully required parsing the WebGL error
+log and mapping error lines back to the editor, since GLSL error messages
+reference the combined source (including injected preamble lines).
+
+## What's Next
+
+This project is complete for now. Potential future additions include multi-pass
+rendering and audio-reactive uniforms.

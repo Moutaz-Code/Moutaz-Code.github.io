@@ -1,0 +1,30 @@
+---
+interface Props {
+  tag: string;
+  href?: string;
+  size?: "sm" | "md";
+}
+
+const { tag, href, size = "sm" } = Astro.props;
+
+const label = tag
+  .replace(/-/g, " ")
+  .replace(/\b\w/g, (c) => c.toUpperCase());
+
+const sizeClasses = {
+  sm: "px-2.5 py-0.5 text-xs",
+  md: "px-3 py-1 text-sm",
+} as const;
+
+const targetHref = href ?? `/tags/${tag}`;
+---
+
+<a
+  href={targetHref}
+  class:list={[
+    "inline-block rounded-full border border-(--color-border) font-medium text-(--color-text-muted) no-underline hover:border-(--color-accent) hover:text-(--color-accent) transition-colors",
+    sizeClasses[size],
+  ]}
+>
+  {label}
+</a>

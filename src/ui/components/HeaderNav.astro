@@ -1,0 +1,30 @@
+---
+interface Props {
+  currentPath: string;
+  items: { label: string; href: string }[];
+}
+
+const { currentPath, items } = Astro.props;
+
+function isActive(href: string, current: string): boolean {
+  if (href === "/") return current === "/";
+  return current.startsWith(href);
+}
+---
+
+<nav class="flex gap-6 text-sm">
+  {items.map((item) => (
+    <a
+      href={item.href}
+      class:list={[
+        "no-underline transition-colors",
+        isActive(item.href, currentPath)
+          ? "text-(--color-text) font-medium"
+          : "text-(--color-text-muted) hover:text-(--color-text)",
+      ]}
+      aria-current={isActive(item.href, currentPath) ? "page" : undefined}
+    >
+      {item.label}
+    </a>
+  ))}
+</nav>

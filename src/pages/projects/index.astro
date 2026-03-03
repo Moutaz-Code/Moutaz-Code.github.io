@@ -1,0 +1,95 @@
+---
+import { contentSource } from "../../app/content";
+import BaseLayout from "../../ui/layouts/BaseLayout.astro";
+import PageHeader from "../../ui/components/primitives/PageHeader.astro";
+import ProjectCard from "../../ui/components/content/ProjectCard.astro";
+import ProjectsFilterBar from "../../ui/components/content/ProjectsFilterBar.astro";
+
+const allProjects = await contentSource.listProjects();
+const allTags = await contentSource.listTags();
+const projectTags = allTags
+  .filter((t) => t.countProjects > 0)
+  .map((t) => ({ slug: t.slug, label: t.label }));
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected work, experiments, and ongoing builds."
+>
+  <section class="py-8">
+    <PageHeader
+      title="Projects"
+      subtitle="Selected work, experiments, and ongoing builds."
+    />
+
+    <ProjectsFilterBar allTags={projectTags} />
+
+    <div id="projects-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        allProjects.map((project) => (
+          <div
+            data-status={project.status}
+            data-tags={project.tags.join(",")}
+            data-filter-item
+          >
+            <ProjectCard
+              title={project.title}
+              slug={project.slug}
+              summary={project.summary}
+              tags={project.tags}
+              status={project.status}
+              featured={project.featured}
+              primaryImage={project.primaryImage}
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <p
+      id="empty-state"
+      class="hidden text-(--color-text-muted) text-center py-12"
+    >
+      No projects match these filters.
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get("status");
+  const tag = params.get("tag");
+
+  if (status || tag) {
+    const items = document.querySelectorAll<HTMLElement>("[data-filter-item]");
+    let visible = 0;
+
+    items.forEach((el) => {
+      const elStatus = el.dataset.status;
+      const elTags = el.dataset.tags?.split(",") ?? [];
+      const matches =
+        (!status || elStatus === status) && (!tag || elTags.includes(tag));
+      if (matches) {
+        visible++;
+      } else {
+        el.style.display = "none";
+      }
+    });
+
+    if (visible === 0) {
+      document.getElementById("empty-state")?.classList.remove("hidden");
+    }
+
+    // Update active pills
+    const current = window.location.pathname + window.location.search;
+    document
+      .querySelectorAll<HTMLElement>("[data-pill-href]")
+      .forEach((pill) => {
+        if (pill.dataset.pillHref === current) {
+          pill.setAttribute("data-pill-active", "");
+        } else {
+          pill.removeAttribute("data-pill-active");
+        }
+      });
+  }
+</script>

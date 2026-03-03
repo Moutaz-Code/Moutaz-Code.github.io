@@ -1,0 +1,55 @@
+---
+import TagChip from "./TagChip.astro";
+
+interface Props {
+  title: string;
+  slug: string;
+  excerpt: string;
+  tags: string[];
+  publishedAt: string;
+  coverImage?: string;
+}
+
+const { title, slug, excerpt, publishedAt, tags, coverImage } = Astro.props;
+
+const displayTags = tags.slice(0, 3);
+const extraCount = tags.length - displayTags.length;
+---
+
+<li
+  class="rounded-lg border border-(--color-border) p-5 transition-colors hover:border-(--color-accent)"
+>
+  <a href={`/blog/${slug}`} class="block no-underline text-(--color-text) group">
+    {
+      coverImage && (
+        <img
+          src={coverImage}
+          alt={title}
+          class="rounded mb-3 w-full h-36 object-cover"
+          loading="lazy"
+        />
+      )
+    }
+    <p
+      class="font-semibold group-hover:text-(--color-accent) transition-colors"
+    >
+      {title}
+    </p>
+    <p class="text-sm text-(--color-text-muted) mt-1 mb-2 line-clamp-2">
+      {excerpt}
+    </p>
+    <div class="flex items-center gap-3 flex-wrap">
+      <time class="text-xs text-(--color-text-muted)">{publishedAt}</time>
+      <div class="flex gap-1.5">
+        {displayTags.map((tag) => <TagChip tag={tag} href={`/blog?tag=${tag}`} />)}
+        {
+          extraCount > 0 && (
+            <span class="text-xs text-(--color-text-muted) self-center">
+              +{extraCount}
+            </span>
+          )
+        }
+      </div>
+    </div>
+  </a>
+</li>

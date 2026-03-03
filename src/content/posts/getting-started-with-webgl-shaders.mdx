@@ -1,0 +1,65 @@
+---
+title: "Getting started with WebGL shaders"
+excerpt: "A beginner-friendly introduction to fragment shaders and GLSL basics."
+tags: ["webgl", "glsl", "graphics"]
+publishedAt: 2025-11-05
+---
+
+## What Is a Shader?
+
+A shader is a small program that runs on the GPU. Fragment shaders determine the
+color of each pixel on screen, making them the foundation of real-time graphics
+effects.
+
+## Your First Fragment Shader
+
+Here's the simplest possible fragment shader — it paints every pixel red:
+
+```glsl
+precision mediump float;
+
+void main() {
+  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); // RGBA
+}
+```
+
+## Adding Coordinates
+
+To create gradients and patterns, you need the pixel's position. The `gl_FragCoord`
+built-in gives you the screen-space coordinates:
+
+```glsl
+precision mediump float;
+uniform vec2 u_resolution;
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution;
+  gl_FragColor = vec4(uv.x, uv.y, 0.5, 1.0);
+}
+```
+
+This creates a smooth gradient from black in the bottom-left corner to
+yellow-ish in the top-right.
+
+## Animating with Time
+
+Pass a `u_time` uniform from JavaScript and use it to animate:
+
+```glsl
+precision mediump float;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution;
+  float r = 0.5 + 0.5 * sin(u_time + uv.x * 6.28);
+  float g = 0.5 + 0.5 * sin(u_time + uv.y * 6.28 + 2.0);
+  gl_FragColor = vec4(r, g, 0.5, 1.0);
+}
+```
+
+## Resources
+
+- [The Book of Shaders](https://thebookofshaders.com) — the best free resource
+- [Shadertoy](https://shadertoy.com) — community shader gallery
+- [WebGL Fundamentals](https://webglfundamentals.org) — comprehensive WebGL guide

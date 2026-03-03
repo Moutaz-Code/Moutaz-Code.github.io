@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../ui/layouts/BaseLayout.astro";
+import PageHeader from "../ui/components/primitives/PageHeader.astro";
+---
+
+<BaseLayout
+  title="About"
+  description="A bit about who I am, what I do, and what I'm interested in."
+>
+  <section class="py-8">
+    <PageHeader title="About Me" subtitle="A bit about who I am, what I do, and what I'm interested in." />
+
+    <div class="space-y-10">
+      <!-- What I Do -->
+      <div>
+        <h2 class="text-xl font-semibold mb-3">What I Do</h2>
+        <p class="text-(--color-text-muted) leading-relaxed">
+          I'm a software engineer who enjoys building things across the stack —
+          from interactive web applications to game prototypes and developer
+          tools. I care about clean architecture, maintainable code, and making
+          software that feels good to use.
+        </p>
+      </div>
+
+      <!-- What I'm Interested In -->
+      <div>
+        <h2 class="text-xl font-semibold mb-3">What I'm Interested In</h2>
+        <p class="text-(--color-text-muted) leading-relaxed">
+          Creative coding, game development, graphics programming, systems
+          design, and the intersection of art and technology. I like exploring
+          new frameworks and building things that push my understanding forward.
+        </p>
+      </div>
+
+      <!-- Toolbox -->
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Toolbox</h2>
+        <div class="flex gap-2 flex-wrap">
+          {
+            [
+              "TypeScript",
+              "JavaScript",
+              "C#",
+              "Python",
+              "React",
+              "Astro",
+              "Node.js",
+              "Unity",
+              "Tailwind CSS",
+              ".NET",
+              "Git",
+              "WebGL",
+              "VS Code",
+              "Figma",
+            ].map((tool) => (
+              <span class="inline-block rounded-full border border-(--color-border) px-3 py-1 text-xs font-medium text-(--color-text-muted)">
+                {tool}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Currently -->
+      <div
+        class="rounded-lg border border-(--color-border) bg-gray-50 p-5"
+      >
+        <h2 class="text-lg font-semibold mb-2">Currently</h2>
+        <ul class="space-y-1 text-sm text-(--color-text-muted)">
+          <li>Building this portfolio site with Astro + Tailwind</li>
+          <li>Studying computer science</li>
+          <li>Experimenting with shader programming</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

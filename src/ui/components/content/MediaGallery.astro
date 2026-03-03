@@ -1,0 +1,53 @@
+---
+interface MediaItem {
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+interface Props {
+  items: MediaItem[];
+}
+
+const { items } = Astro.props;
+---
+
+{
+  items.length === 1 && (
+    <figure class="m-0">
+      <img
+        src={items[0].src}
+        alt={items[0].alt ?? ""}
+        class="rounded-lg border border-(--color-border) w-full"
+        loading="lazy"
+      />
+      {items[0].caption && (
+        <figcaption class="mt-2 text-sm text-(--color-text-muted) text-center">
+          {items[0].caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+{
+  items.length >= 2 && (
+    <div class="grid gap-4 sm:grid-cols-2">
+      {items.map((item) => (
+        <figure class="m-0">
+          <img
+            src={item.src}
+            alt={item.alt ?? ""}
+            class="rounded-lg border border-(--color-border) w-full"
+            loading="lazy"
+          />
+          {item.caption && (
+            <figcaption class="mt-1 text-xs text-(--color-text-muted) text-center">
+              {item.caption}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  )
+}
