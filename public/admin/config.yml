@@ -3,8 +3,8 @@ backend:
   repo: Moutaz-Code/Moutaz-Code.github.io
   branch: main
   # UPDATE base_url to your actual Vercel deployment domain
-  base_url: https://moutaz-code.github.io
-  auth_endpoint: api/auth
+  base_url: https://moutaz-code-github-io.vercel.app/
+  auth_endpoint: /api/auth
 
 media_folder: public/uploads
 public_folder: /uploads
