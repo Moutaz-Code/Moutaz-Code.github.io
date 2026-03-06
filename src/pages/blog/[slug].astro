@@ -33,8 +33,8 @@ const relatedPosts = allPosts
 ---
 
 <BaseLayout title={title} description={excerpt} ogType="article" ogImage={coverImage}>
-  <article class="py-8">
-    <div class="mb-8">
+  <article class="py-8" data-pagefind-body>
+    <div class="mb-8" data-pagefind-ignore>
       <a
         href="/blog"
         class="text-sm text-(--color-text-muted) hover:text-(--color-accent) no-underline"
@@ -44,6 +44,8 @@ const relatedPosts = allPosts
     </div>
 
     <h1 class="text-3xl font-bold tracking-tight mb-3">{title}</h1>
+    <span data-pagefind-meta="type:Post" class="hidden"></span>
+    <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
 
     <div class="flex items-center gap-3 mb-6 text-sm text-(--color-text-muted) flex-wrap">
       <time datetime={publishedAt.toISOString()}>{formattedDate}</time>
@@ -68,6 +70,7 @@ const relatedPosts = allPosts
       <Content />
     </Prose>
 
+    <div data-pagefind-ignore>
     {
       tags.length > 0 && (
         <div class="mt-10 pt-6 border-t border-(--color-border)">
@@ -102,5 +105,6 @@ const relatedPosts = allPosts
         </div>
       )
     }
+    </div>
   </article>
 </BaseLayout>

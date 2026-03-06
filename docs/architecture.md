@@ -384,3 +384,56 @@ Autodiscovery `<link>` tag is in BaseLayout `<head>`.
 - No dynamic OG image generation (static placeholder only)
 - No JSON-LD structured data
 - No analytics integration
+
+## Phase 8: Search & discoverability
+
+### Approach
+
+Uses **Pagefind** (static search index) via the `astro-pagefind` integration (Approach A).
+Pagefind runs automatically after `astro build`, generates an index at `dist/pagefind/`,
+and loads on demand only when the user visits `/search`.
+
+### Integration setup
+
+- `astro-pagefind` and `pagefind` installed as devDependencies
+- `pagefind()` added to `astro.config.mjs` integrations (after `sitemap()`)
+- No custom build scripts needed — the integration handles everything
+
+### What gets indexed
+
+Only pages with `data-pagefind-body` are indexed:
+
+| Page | Indexed content |
+|---|---|
+| `projects/[slug].astro` | Title, summary, tags, MDX body |
+| `blog/[slug].astro` | Title, excerpt, tags, MDX body |
+
+Each indexed page carries Pagefind meta attributes:
+- `data-pagefind-meta="type:Project"` or `data-pagefind-meta="type:Post"`
+- `data-pagefind-meta="tags:tag1,tag2,..."`
+
+### What is excluded
+
+| Element | Method |
+|---|---|
+| Header nav | `data-pagefind-ignore` on `<header>` in BaseLayout |
+| Footer | `data-pagefind-ignore` on `<footer>` in BaseLayout |
+| Back links | `data-pagefind-ignore` on back-navigation div |
+| Browse more / related sections | `data-pagefind-ignore` wrapper |
+| `/admin` page | `data-pagefind-ignore` on `<body>` in admin HTML |
+| All other pages (listing, tags, about, etc.) | No `data-pagefind-body` = not indexed |
+
+### Search page
+
+`/search` — uses `astro-pagefind`'s `Search` component with custom CSS variable
+overrides to match the site theme. Includes quick links to tags, projects, and blog.
+Marked `noIndex` (robots) since it has no indexable content of its own.
+
+### Files added/modified
+
+- `src/pages/search.astro` — new search page
+- `astro.config.mjs` — added `pagefind()` integration
+- `src/app/siteConfig.ts` — added "Search" nav item
+- `src/pages/projects/[slug].astro` — `data-pagefind-body`, meta, ignore wrappers
+- `src/pages/blog/[slug].astro` — `data-pagefind-body`, meta, ignore wrappers
+- `public/admin/index.html` — `data-pagefind-ignore` on body

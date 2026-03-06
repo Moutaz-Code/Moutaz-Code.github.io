@@ -30,8 +30,8 @@ const relatedProjects = allProjects
 ---
 
 <BaseLayout title={title} description={summary} ogImage={project.primaryImage?.src}>
-  <article class="py-8">
-    <div class="mb-8">
+  <article class="py-8" data-pagefind-body>
+    <div class="mb-8" data-pagefind-ignore>
       <a
         href="/projects"
         class="text-sm text-(--color-text-muted) hover:text-(--color-accent) no-underline"
@@ -41,6 +41,8 @@ const relatedProjects = allProjects
     </div>
 
     <h1 class="text-3xl font-bold tracking-tight mb-3">{title}</h1>
+    <span data-pagefind-meta="type:Project" class="hidden"></span>
+    <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
 
     <div class="flex items-center gap-3 mb-6 flex-wrap">
       <StatusBadge status={status} />
@@ -77,6 +79,7 @@ const relatedProjects = allProjects
     </Prose>
 
     <!-- Browse more -->
+    <div data-pagefind-ignore>
     {
       tags.length > 0 && (
         <div class="mt-10 pt-6 border-t border-(--color-border)">
@@ -112,5 +115,6 @@ const relatedProjects = allProjects
         </div>
       )
     }
+    </div>
   </article>
 </BaseLayout>
