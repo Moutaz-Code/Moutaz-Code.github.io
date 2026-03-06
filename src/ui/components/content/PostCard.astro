@@ -1,5 +1,6 @@
 ---
 import TagChip from "./TagChip.astro";
+import ResponsiveImage from "./ResponsiveImage.astro";
 
 interface Props {
   title: string;
@@ -22,12 +23,14 @@ const extraCount = tags.length - displayTags.length;
   <a href={`/blog/${slug}`} class="block no-underline text-(--color-text) group">
     {
       coverImage && (
-        <img
-          src={coverImage}
-          alt={title}
-          class="rounded mb-3 w-full h-36 object-cover"
-          loading="lazy"
-        />
+        <div class="aspect-video overflow-hidden rounded mb-3">
+          <ResponsiveImage
+            src={coverImage}
+            alt={title}
+            variant="card"
+            class="w-full h-full object-cover"
+          />
+        </div>
       )
     }
     <p

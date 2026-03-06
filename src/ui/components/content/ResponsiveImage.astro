@@ -1,0 +1,35 @@
+---
+import { mediaService } from "../../../app/media";
+import type { ResponsiveVariant } from "../../../domain/ports/MediaService";
+
+interface Props {
+  src: string;
+  alt?: string;
+  variant?: ResponsiveVariant;
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+
+const {
+  src,
+  alt = "",
+  variant = "prose",
+  loading,
+  class: className,
+} = Astro.props;
+
+const resolved = mediaService.buildResponsiveImage(src, variant);
+const isHero = variant === "hero";
+const imgLoading = loading ?? (isHero ? "eager" : "lazy");
+---
+
+<img
+  src={resolved.src}
+  srcset={resolved.srcset}
+  sizes={resolved.sizes}
+  alt={alt}
+  loading={imgLoading}
+  decoding="async"
+  {...(isHero ? { fetchpriority: "high" } : {})}
+  class:list={[className]}
+/>

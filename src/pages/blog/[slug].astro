@@ -4,6 +4,7 @@ import BaseLayout from "../../ui/layouts/BaseLayout.astro";
 import TagChip from "../../ui/components/content/TagChip.astro";
 import PostCard from "../../ui/components/content/PostCard.astro";
 import Prose from "../../ui/components/content/Prose.astro";
+import ResponsiveImage from "../../ui/components/content/ResponsiveImage.astro";
 
 export async function getStaticPaths() {
   const posts = await contentSource.listPosts();
@@ -57,11 +58,11 @@ const relatedPosts = allPosts
 
     {
       coverImage && (
-        <img
+        <ResponsiveImage
           src={coverImage}
           alt={title}
+          variant="hero"
           class="rounded-lg border border-(--color-border) w-full mb-8"
-          loading="lazy"
         />
       )
     }

@@ -437,3 +437,78 @@ Marked `noIndex` (robots) since it has no indexable content of its own.
 - `src/pages/projects/[slug].astro` — `data-pagefind-body`, meta, ignore wrappers
 - `src/pages/blog/[slug].astro` — `data-pagefind-body`, meta, ignore wrappers
 - `public/admin/index.html` — `data-pagefind-ignore` on body
+
+## Phase 9: Cloudinary delivery + responsive images + performance hardening
+
+### Architecture
+
+Follows the same ports & adapters pattern as content:
+
+- **Port**: `src/domain/ports/MediaService.ts` — defines `MediaService` interface,
+  `ResponsiveVariant`, `ResponsiveImage`, `ResolvedMedia` types
+- **Local adapter**: `src/adapters/media-local/LocalMediaService.ts` — normalizes
+  leading `/`, returns `{ src }` only (no srcset for local assets)
+- **Cloudinary adapter**: `src/adapters/media-cloudinary/CloudinaryMediaService.ts` —
+  detects Cloudinary URLs, inserts `f_auto,q_auto,c_limit,w_<W>` transforms,
+  generates `srcset` and `sizes` per variant
+- **Router**: `src/app/media.ts` — exports `mediaService` singleton that routes
+  to the correct adapter based on URL pattern
+
+### Responsive variants
+
+| Variant | Widths (srcset) | Default width | Sizes |
+|---|---|---|---|
+| `card` | 320, 480, 640, 800 | 800 | `(max-width: 768px) 100vw, 420px` |
+| `prose` | 480, 768, 1024, 1280 | 1024 | `(max-width: 768px) 100vw, 768px` |
+| `hero` | 768, 1024, 1440, 1920 | 1440 | `100vw` |
+| `gallery` | 480, 768, 1024, 1440 | 1024 | `(max-width: 768px) 100vw, 900px` |
+
+### ResponsiveImage component
+
+`src/ui/components/content/ResponsiveImage.astro` — single component for all images.
+Props: `src`, `alt`, `variant`, `loading`, `class`.
+
+- All images get `decoding="async"`
+- Hero variant: `loading="eager"`, `fetchpriority="high"`
+- All others: `loading="lazy"`
+- Cloudinary URLs get `srcset` + `sizes`; local/external URLs get plain `src`
+
+### CLS hardening
+
+ProjectCard and PostCard wrap images in `<div class="aspect-video overflow-hidden rounded">`.
+The fixed 16:9 aspect ratio prevents layout shift before images load.
+
+### URL routing logic
+
+| URL pattern | Adapter | Behavior |
+|---|---|---|
+| Starts with `http` + contains `res.cloudinary.com` | CloudinaryMediaService | Transforms + srcset |
+| Starts with `http` (other) | External passthrough | Plain src |
+| Local path (e.g. `/uploads/...`) | LocalMediaService | Normalize leading `/` |
+
+### Components updated
+
+All raw `<img>` tags replaced with `<ResponsiveImage>`:
+- `ProjectCard.astro` — variant `card`
+- `PostCard.astro` — variant `card`
+- `MediaGallery.astro` — variant `gallery`
+- `blog/[slug].astro` cover image — variant `hero`
+- Project detail uses MediaGallery (inherits `gallery` variant)
+
+### Example generated srcset (Cloudinary)
+
+For a card variant with source URL
+`https://res.cloudinary.com/demo/image/upload/v1234/photo.jpg`:
+
+```
+https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,c_limit,w_320/v1234/photo.jpg 320w,
+https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,c_limit,w_480/v1234/photo.jpg 480w,
+https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,c_limit,w_640/v1234/photo.jpg 640w,
+https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,c_limit,w_800/v1234/photo.jpg 800w
+```
+
+### Backward compatibility
+
+- Local `/uploads/...` paths continue to work unchanged (LocalMediaService)
+- External non-Cloudinary URLs pass through unchanged
+- No new binary assets committed to the repo for Cloudinary content

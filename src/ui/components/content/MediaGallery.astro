@@ -1,4 +1,6 @@
 ---
+import ResponsiveImage from "./ResponsiveImage.astro";
+
 interface MediaItem {
   src: string;
   alt?: string;
@@ -15,11 +17,11 @@ const { items } = Astro.props;
 {
   items.length === 1 && (
     <figure class="m-0">
-      <img
+      <ResponsiveImage
         src={items[0].src}
         alt={items[0].alt ?? ""}
+        variant="gallery"
         class="rounded-lg border border-(--color-border) w-full"
-        loading="lazy"
       />
       {items[0].caption && (
         <figcaption class="mt-2 text-sm text-(--color-text-muted) text-center">
@@ -35,11 +37,11 @@ const { items } = Astro.props;
     <div class="grid gap-4 sm:grid-cols-2">
       {items.map((item) => (
         <figure class="m-0">
-          <img
+          <ResponsiveImage
             src={item.src}
             alt={item.alt ?? ""}
+            variant="gallery"
             class="rounded-lg border border-(--color-border) w-full"
-            loading="lazy"
           />
           {item.caption && (
             <figcaption class="mt-1 text-xs text-(--color-text-muted) text-center">

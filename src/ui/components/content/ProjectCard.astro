@@ -2,6 +2,7 @@
 import Card from "../primitives/Card.astro";
 import TagChip from "./TagChip.astro";
 import StatusBadge from "./StatusBadge.astro";
+import ResponsiveImage from "./ResponsiveImage.astro";
 
 interface Props {
   title: string;
@@ -23,12 +24,14 @@ const extraCount = tags.length - displayTags.length;
 <Card href={`/projects/${slug}`} class={featured ? "border-(--color-accent)/30" : undefined}>
   {
     primaryImage && (
-      <img
-        src={primaryImage.src}
-        alt={primaryImage.alt ?? title}
-        class="rounded mb-3 w-full h-40 object-cover"
-        loading="lazy"
-      />
+      <div class="aspect-video overflow-hidden rounded mb-3">
+        <ResponsiveImage
+          src={primaryImage.src}
+          alt={primaryImage.alt ?? title}
+          variant="card"
+          class="w-full h-full object-cover"
+        />
+      </div>
     )
   }
   <div class="flex items-center justify-between gap-2 mb-2">
