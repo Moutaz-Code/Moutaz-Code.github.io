@@ -3,9 +3,10 @@ interface Props {
   tag: string;
   href?: string;
   size?: "sm" | "md";
+  interactive?: boolean;
 }
 
-const { tag, href, size = "sm" } = Astro.props;
+const { tag, href, size = "sm", interactive = true } = Astro.props;
 
 const label = tag
   .replace(/-/g, " ")
@@ -17,14 +18,16 @@ const sizeClasses = {
 } as const;
 
 const targetHref = href ?? `/tags/${tag}`;
+const Tag = interactive ? "a" : "span";
 ---
 
-<a
-  href={targetHref}
+<Tag
+  {...(interactive ? { href: targetHref } : {})}
   class:list={[
-    "inline-block rounded-full border border-(--color-border) font-medium text-(--color-text-muted) no-underline hover:border-(--color-accent) hover:text-(--color-accent) transition-colors",
+    "inline-block rounded-full border border-(--color-border) font-medium text-(--color-text-muted) transition-colors",
+    interactive && "no-underline hover:border-(--color-accent) hover:text-(--color-accent)",
     sizeClasses[size],
   ]}
 >
   {label}
-</a>
+</Tag>

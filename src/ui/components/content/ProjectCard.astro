@@ -37,7 +37,7 @@ const extraCount = tags.length - displayTags.length;
   </div>
   <p class="text-sm text-(--color-text-muted) mb-3 line-clamp-2">{summary}</p>
   <div class="flex gap-1.5 flex-wrap">
-    {displayTags.map((tag) => <TagChip tag={tag} href={`/projects?tag=${tag}`} />)}
+    {displayTags.map((tag) => <TagChip tag={tag} interactive={false} />)}
     {extraCount > 0 && (
       <span class="text-xs text-(--color-text-muted) self-center">+{extraCount}</span>
     )}
