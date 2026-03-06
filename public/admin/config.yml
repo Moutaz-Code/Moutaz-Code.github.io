@@ -2,10 +2,20 @@ backend:
   name: github
   repo: Moutaz-Code/Moutaz-Code.github.io
   branch: main
-  # UPDATE base_url to your actual Vercel deployment domain
-  base_url: https://moutaz-code-github-io.vercel.app/
+  base_url: https://moutaz-code-github-io.vercel.app
   auth_endpoint: /api/auth
 
+# Cloudinary media library (client-side config)
+# cloud_name and api_key are OK here. Never include api_secret.
+media_libraries:
+  cloudinary:
+    config:
+      cloud_name: dnal0wnob
+      api_key: 845452482314754
+
+# Keep these for legacy/local uploads if needed,
+# but once Cloudinary is working you can consider removing local folders
+# or leaving them as fallback.
 media_folder: public/uploads
 public_folder: /uploads
 
@@ -17,15 +27,20 @@ collections:
     format: frontmatter
     create: true
     slug: "{{slug}}"
-    media_folder: /public/uploads/projects
+
+    # Legacy local folders (optional to keep during transition)
+    media_folder: public/uploads/projects
     public_folder: /uploads/projects
+
     fields:
       - { name: title, label: Title, widget: string }
       - { name: summary, label: Summary, widget: text }
+
       - name: tags
         label: Tags
         widget: list
         default: []
+
       - name: status
         label: Status
         widget: select
@@ -33,9 +48,12 @@ collections:
           - { label: Ongoing, value: ongoing }
           - { label: Completed, value: completed }
         default: ongoing
+
       - { name: featured, label: Featured, widget: boolean, default: false }
+
       - { name: dateStart, label: Start Date, widget: datetime, required: false, date_format: "YYYY-MM-DD", time_format: false }
       - { name: dateEnd, label: End Date, widget: datetime, required: false, date_format: "YYYY-MM-DD", time_format: false }
+
       - name: links
         label: Links
         widget: list
@@ -43,6 +61,7 @@ collections:
         fields:
           - { name: label, label: Label, widget: string }
           - { name: url, label: URL, widget: string }
+
       - name: media
         label: Media
         widget: list
@@ -57,9 +76,13 @@ collections:
               - { label: Video, value: video }
               - { label: Embed, value: embed }
             default: image
+
+          # When Cloudinary is enabled, Sveltia should insert Cloudinary URLs here.
           - { name: src, label: Source, widget: image }
+
           - { name: alt, label: Alt Text, widget: string, required: false }
           - { name: caption, label: Caption, widget: string, required: false }
+
       - { name: body, label: Body, widget: markdown }
 
   - name: posts
@@ -69,15 +92,23 @@ collections:
     format: frontmatter
     create: true
     slug: "{{slug}}"
-    media_folder: /public/uploads/posts
+
+    # Legacy local folders (optional to keep during transition)
+    media_folder: public/uploads/posts
     public_folder: /uploads/posts
+
     fields:
       - { name: title, label: Title, widget: string }
       - { name: excerpt, label: Excerpt, widget: text }
+
       - name: tags
         label: Tags
         widget: list
         default: []
+
       - { name: publishedAt, label: Published Date, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+
+      # When Cloudinary is enabled, Sveltia should insert a Cloudinary URL here.
       - { name: coverImage, label: Cover Image, widget: image, required: false }
+
       - { name: body, label: Body, widget: markdown }
