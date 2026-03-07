@@ -26,8 +26,9 @@ function tagSlugToLabel(slug: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-/** Ensure a file path starts with `/` (CMS may omit the leading slash). */
+/** Ensure a file path starts with `/` (CMS may omit the leading slash). Absolute URLs are returned as-is. */
 function normalizeSrc(src: string): string {
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
   return src.startsWith("/") ? src : `/${src}`;
 }
 
