@@ -30,6 +30,12 @@
   --color-status-ongoing-bg: #dcfce7;
   --color-status-ongoing-text: #15803d;
   --color-status-completed-bg: #f3f4f6;
+
+  /* Ambient */
+  --ambient-1: rgba(99, 102, 241, 0.18);   /* indigo */
+  --ambient-2: rgba(59, 130, 246, 0.14);   /* blue */
+  --ambient-3: rgba(168, 85, 247, 0.10);   /* purple */
+  --ambient-grain-opacity: 0.06;
 }
 
 html.theme-dark {
@@ -58,4 +64,10 @@ html.theme-dark {
   --color-status-ongoing-bg: #052e16;
   --color-status-ongoing-text: #4ade80;
   --color-status-completed-bg: #27272a;
+
+  /* Ambient */
+  --ambient-1: rgba(99, 102, 241, 0.12);
+  --ambient-2: rgba(59, 130, 246, 0.10);
+  --ambient-3: rgba(168, 85, 247, 0.08);
+  --ambient-grain-opacity: 0.04;
 }

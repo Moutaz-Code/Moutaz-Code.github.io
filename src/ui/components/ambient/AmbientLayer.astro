@@ -1,0 +1,20 @@
+---
+// AmbientLayer — decorative background with gradient blobs, parallax shapes, and grain overlay.
+// Include once in the layout; all animation is handled by AmbientInit.
+import "../../../styles/ambient.css";
+---
+
+<div class="ambient-root" id="ambient-root" aria-hidden="true">
+  <!-- Gradient blobs -->
+  <div class="ambient-blob" data-blob="1"></div>
+  <div class="ambient-blob" data-blob="2"></div>
+  <div class="ambient-blob" data-blob="3"></div>
+
+  <!-- Parallax shapes -->
+  <div class="ambient-shape" data-shape="1" data-parallax-depth="0.02"></div>
+  <div class="ambient-shape" data-shape="2" data-parallax-depth="0.035"></div>
+  <div class="ambient-shape" data-shape="3" data-parallax-depth="0.015"></div>
+
+  <!-- Grain overlay -->
+  <div class="ambient-grain"></div>
+</div>

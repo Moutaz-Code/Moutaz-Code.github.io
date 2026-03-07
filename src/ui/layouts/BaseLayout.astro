@@ -5,6 +5,8 @@ import HeaderNav from "../components/HeaderNav.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import MotionInit from "../components/MotionInit.astro";
 import SmoothScrollInit from "../components/SmoothScrollInit.astro";
+import AmbientLayer from "../components/ambient/AmbientLayer.astro";
+import AmbientInit from "../components/ambient/AmbientInit.astro";
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
   noIndex?: boolean;
   enableMotion?: boolean;
   enableSmoothScroll?: boolean;
+  enableAmbient?: boolean;
 }
 
 const {
@@ -25,6 +28,7 @@ const {
   noIndex = false,
   enableMotion = false,
   enableSmoothScroll = false,
+  enableAmbient = false,
 } = Astro.props;
 
 const pageTitle = title
@@ -103,6 +107,9 @@ const socialLabels: Record<string, string> = {
     <link rel="alternate" type="application/rss+xml" title={`${siteConfig.siteName} Blog RSS`} href="/rss.xml" />
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Ambient background layer -->
+    {enableAmbient && <AmbientLayer />}
+
     <!-- Skip to content -->
     <a
       href="#main"
@@ -112,7 +119,7 @@ const socialLabels: Record<string, string> = {
     </a>
 
     <!-- Header -->
-    <header class="border-b border-(--color-border)" data-pagefind-ignore>
+    <header class="relative z-10 border-b border-(--color-border)" data-pagefind-ignore>
       <div
         class="mx-auto max-w-4xl px-6 py-4 flex items-center justify-between"
       >
@@ -130,12 +137,12 @@ const socialLabels: Record<string, string> = {
     </header>
 
     <!-- Main content -->
-    <main id="main" class="flex-1 mx-auto w-full max-w-4xl px-6 py-12">
+    <main id="main" class="relative z-10 flex-1 mx-auto w-full max-w-4xl px-6 py-12">
       <slot />
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-(--color-border)" data-pagefind-ignore>
+    <footer class="relative z-10 border-t border-(--color-border)" data-pagefind-ignore>
       <div
         class="mx-auto max-w-4xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-(--color-text-muted)"
       >
@@ -161,5 +168,6 @@ const socialLabels: Record<string, string> = {
     <SpeedInsights />
     {enableMotion && <MotionInit />}
     {enableSmoothScroll && <SmoothScrollInit />}
+    {enableAmbient && <AmbientInit />}
   </body>
 </html>
