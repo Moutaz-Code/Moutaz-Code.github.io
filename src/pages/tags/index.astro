@@ -3,6 +3,7 @@ import { contentSource } from "../../app/content";
 import BaseLayout from "../../ui/layouts/BaseLayout.astro";
 import PageHeader from "../../ui/components/primitives/PageHeader.astro";
 import TagChip from "../../ui/components/content/TagChip.astro";
+import SignatureInit from "../../ui/components/signature/SignatureInit.astro";
 
 const allTags = await contentSource.listTags();
 ---
@@ -12,6 +13,7 @@ const allTags = await contentSource.listTags();
     <PageHeader
       title="Tags"
       subtitle="Browse projects and posts by topic."
+      enableSignature
     />
 
     <div class="space-y-4" data-reveal data-reveal-stagger="children">
@@ -30,4 +32,5 @@ const allTags = await contentSource.listTags();
       }
     </div>
   </section>
+  <SignatureInit />
 </BaseLayout>

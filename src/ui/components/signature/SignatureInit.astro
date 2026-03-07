@@ -1,0 +1,13 @@
+---
+// SignatureInit — dynamically imports anime.js and kicks off the signature
+// underline animation. Include once per page (after the signature DOM).
+---
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-signature-root]");
+  if (root) {
+    import("../../anime/signature").then(({ initSignature }) => {
+      initSignature(root);
+    });
+  }
+</script>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../ui/layouts/BaseLayout.astro";
 import PageHeader from "../ui/components/primitives/PageHeader.astro";
+import SignatureInit from "../ui/components/signature/SignatureInit.astro";
 ---
 
 <BaseLayout
@@ -11,7 +12,7 @@ import PageHeader from "../ui/components/primitives/PageHeader.astro";
   enableCursor
 >
   <section class="py-8">
-    <PageHeader title="About Me" subtitle="A bit about who I am, what I do, and what I'm interested in." />
+    <PageHeader title="About Me" subtitle="A bit about who I am, what I do, and what I'm interested in." enableSignature />
 
     <div class="space-y-10">
       <!-- What I Do -->
@@ -77,4 +78,5 @@ import PageHeader from "../ui/components/primitives/PageHeader.astro";
       </div>
     </div>
   </section>
+  <SignatureInit />
 </BaseLayout>

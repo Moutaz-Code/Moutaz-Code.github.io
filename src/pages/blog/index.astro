@@ -4,6 +4,7 @@ import BaseLayout from "../../ui/layouts/BaseLayout.astro";
 import PageHeader from "../../ui/components/primitives/PageHeader.astro";
 import PostCard from "../../ui/components/content/PostCard.astro";
 import BlogFilterBar from "../../ui/components/content/BlogFilterBar.astro";
+import SignatureInit from "../../ui/components/signature/SignatureInit.astro";
 
 const allPosts = await contentSource.listPosts();
 const allTags = await contentSource.listTags();
@@ -25,6 +26,7 @@ const blogTags = allTags
     <PageHeader
       title="Blog"
       subtitle="Posts about software engineering, architecture, and creative coding."
+      enableSignature
     />
 
     <BlogFilterBar allTags={blogTags} />
@@ -56,6 +58,7 @@ const blogTags = allTags
       No posts match this filter.
     </p>
   </section>
+  <SignatureInit />
 </BaseLayout>
 
 <script>

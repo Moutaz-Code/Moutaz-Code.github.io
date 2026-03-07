@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../ui/layouts/BaseLayout.astro";
+import SignatureUnderline from "../ui/components/signature/SignatureUnderline.astro";
+import SignatureInit from "../ui/components/signature/SignatureInit.astro";
 import { siteConfig } from "../app/siteConfig";
 ---
 
@@ -11,7 +13,8 @@ import { siteConfig } from "../app/siteConfig";
   enableCursor
 >
   <section class="py-8">
-    <h1 class="text-3xl font-bold tracking-tight mb-2">Contact</h1>
+    <h1 class="text-3xl font-bold tracking-tight mb-1">Contact</h1>
+    <SignatureUnderline variant="header" class="mb-2" />
     <p class="text-(--color-text-muted) mb-8">
       Have a question, project idea, or just want to say hi? Reach out through
       any of the channels below.
@@ -89,4 +92,5 @@ import { siteConfig } from "../app/siteConfig";
       </div>
     </div>
   </section>
+  <SignatureInit />
 </BaseLayout>
