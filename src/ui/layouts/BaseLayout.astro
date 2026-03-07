@@ -7,6 +7,8 @@ import MotionInit from "../components/MotionInit.astro";
 import SmoothScrollInit from "../components/SmoothScrollInit.astro";
 import AmbientLayer from "../components/ambient/AmbientLayer.astro";
 import AmbientInit from "../components/ambient/AmbientInit.astro";
+import CursorLayer from "../components/cursor/CursorLayer.astro";
+import CursorInit from "../components/cursor/CursorInit.astro";
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
@@ -19,6 +21,7 @@ interface Props {
   enableSmoothScroll?: boolean;
   enableAmbient?: boolean;
   ambientVariant?: "a" | "b" | "c";
+  enableCursor?: boolean;
 }
 
 const {
@@ -31,6 +34,7 @@ const {
   enableSmoothScroll = false,
   enableAmbient = false,
   ambientVariant = "a",
+  enableCursor = false,
 } = Astro.props;
 
 const pageTitle = title
@@ -112,6 +116,9 @@ const socialLabels: Record<string, string> = {
     <!-- Ambient background layer -->
     {enableAmbient && <AmbientLayer variant={ambientVariant} />}
 
+    <!-- Custom cursor layer -->
+    {enableCursor && <CursorLayer />}
+
     <!-- Skip to content -->
     <a
       href="#main"
@@ -171,5 +178,6 @@ const socialLabels: Record<string, string> = {
     {enableMotion && <MotionInit />}
     {enableSmoothScroll && <SmoothScrollInit />}
     {enableAmbient && <AmbientInit />}
+    {enableCursor && <CursorInit />}
   </body>
 </html>
