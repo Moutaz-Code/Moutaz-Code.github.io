@@ -4,9 +4,10 @@ interface Props {
   variant?: "primary" | "secondary" | "ghost";
   external?: boolean;
   class?: string;
+  cursorLabel?: string;
 }
 
-const { href, variant = "secondary", external = false, class: className } = Astro.props;
+const { href, variant = "secondary", external = false, class: className, cursorLabel } = Astro.props;
 
 const variantClasses = {
   primary:
@@ -21,6 +22,7 @@ const variantClasses = {
 <a
   href={href}
   data-cursor="button"
+  data-cursor-label={cursorLabel}
   class:list={[
     "inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium no-underline transition-colors",
     variantClasses[variant],
