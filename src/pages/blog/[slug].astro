@@ -6,6 +6,7 @@ import PostCard from "../../ui/components/content/PostCard.astro";
 import Prose from "../../ui/components/content/Prose.astro";
 import ResponsiveImage from "../../ui/components/content/ResponsiveImage.astro";
 import CornerFlourish from "../../ui/components/signature/CornerFlourish.astro";
+import CornerSpark from "../../ui/components/signature/CornerSpark.astro";
 import SignatureInit from "../../ui/components/signature/SignatureInit.astro";
 
 export async function getStaticPaths() {
@@ -48,6 +49,7 @@ const relatedPosts = allPosts
 
     <div class="relative">
       <CornerFlourish position="top-right" />
+      <CornerSpark position="top-right" />
       <h1 class="text-3xl font-bold tracking-tight mb-3" data-reveal>{title}</h1>
       <span data-pagefind-meta="type:Post" class="hidden"></span>
       <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>

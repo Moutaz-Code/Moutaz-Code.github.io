@@ -8,6 +8,7 @@ import SkillsStrip from "../ui/components/home/SkillsStrip.astro";
 import ExperienceSection from "../ui/components/home/ExperienceSection.astro";
 import LatestPosts from "../ui/components/home/LatestPosts.astro";
 import ContactCTA from "../ui/components/home/ContactCTA.astro";
+import MagneticInit from "../ui/components/motion/MagneticInit.astro";
 
 const featuredProjects = await contentSource.listProjects({ featuredOnly: true, limit: 3 });
 const latestPosts = await contentSource.listPosts({ limit: 2 });
@@ -21,4 +22,5 @@ const latestPosts = await contentSource.listPosts({ limit: 2 });
   <LatestPosts posts={latestPosts} />
   <ContactCTA />
   <HeroSignatureInit />
+  <MagneticInit />
 </BaseLayout>

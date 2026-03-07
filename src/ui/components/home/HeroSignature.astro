@@ -55,6 +55,7 @@ import { profileConfig } from "../../../app/profileConfig";
           href={cta.href}
           variant={cta.variant}
           cursorLabel={cta.variant === "primary" ? "Explore" : undefined}
+          magnetic={cta.variant === "primary"}
         >
           {cta.label}
         </ButtonLink>

@@ -5,9 +5,10 @@ interface Props {
   external?: boolean;
   class?: string;
   cursorLabel?: string;
+  magnetic?: boolean;
 }
 
-const { href, variant = "secondary", external = false, class: className, cursorLabel } = Astro.props;
+const { href, variant = "secondary", external = false, class: className, cursorLabel, magnetic = false } = Astro.props;
 
 const variantClasses = {
   primary:
@@ -23,6 +24,7 @@ const variantClasses = {
   href={href}
   data-cursor="button"
   data-cursor-label={cursorLabel}
+  data-magnetic={magnetic ? "" : undefined}
   class:list={[
     "inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium no-underline transition-colors",
     variantClasses[variant],
