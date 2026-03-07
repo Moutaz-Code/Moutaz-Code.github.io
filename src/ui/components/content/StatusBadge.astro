@@ -10,8 +10,8 @@ const { status } = Astro.props;
   class:list={[
     "inline-block text-xs px-2 py-0.5 rounded-full font-medium",
     status === "ongoing"
-      ? "bg-green-100 text-green-700"
-      : "bg-gray-100 text-(--color-text-muted)",
+      ? "bg-(--color-status-ongoing-bg) text-(--color-status-ongoing-text)"
+      : "bg-(--color-status-completed-bg) text-(--color-text-muted)",
   ]}
 >
   {status}

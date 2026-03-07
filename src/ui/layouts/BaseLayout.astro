@@ -2,6 +2,7 @@
 import "../../styles/global.css";
 import { siteConfig } from "../../app/siteConfig";
 import HeaderNav from "../components/HeaderNav.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import MotionInit from "../components/MotionInit.astro";
 import SmoothScrollInit from "../components/SmoothScrollInit.astro";
 import SpeedInsights from '@vercel/speed-insights/astro';
@@ -56,6 +57,24 @@ const socialLabels: Record<string, string> = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Theme: prevent flash of wrong theme before CSS paints -->
+    <script is:inline>
+      (function(){
+        var t = localStorage.getItem('theme');
+        var dark = t === 'dark' || (!t && matchMedia('(prefers-color-scheme:dark)').matches);
+        if (dark) document.documentElement.classList.add('theme-dark');
+      })();
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="canonical" href={canonicalUrl} />
@@ -87,7 +106,7 @@ const socialLabels: Record<string, string> = {
     <!-- Skip to content -->
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-(--color-accent) focus:text-white focus:rounded-lg focus:no-underline"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-(--color-accent) focus:text-(--color-accent-contrast) focus:rounded-lg focus:no-underline"
     >
       Skip to content
     </a>
@@ -103,7 +122,10 @@ const socialLabels: Record<string, string> = {
         >
           {siteConfig.siteName}
         </a>
-        <HeaderNav currentPath={currentPath} items={siteConfig.navItems} />
+      <div class="flex items-center gap-4">
+          <HeaderNav currentPath={currentPath} items={siteConfig.navItems} />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
 
