@@ -4,20 +4,21 @@ import { createDrawable } from "animejs/svg";
 export interface SignatureOptions {
   duration?: number;
   delay?: number;
+  targetOpacity?: number;
 }
 
 /**
- * Initialises a page-header signature underline animation.
+ * Initialises a signature stroke-draw animation on a single root.
  * Runs once per page load, then stops — no continuous loops.
  *
  * @param root Element with [data-signature-root]
- * @param opts Duration / delay overrides
+ * @param opts Duration / delay / opacity overrides
  */
 export function initSignature(
   root: HTMLElement,
   opts: SignatureOptions = {}
 ): void {
-  const { duration = 550, delay = 80 } = opts;
+  const { duration = 550, delay = 80, targetOpacity = 0.6 } = opts;
 
   // ── Guard: reduced motion ──────────────────────────
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -44,9 +45,9 @@ export function initSignature(
     drawable,
     {
       draw: ["0 0", "0 1"],
-      opacity: [0, 0.6],
+      opacity: [0, targetOpacity],
       duration,
-      ease: "inOutSine",
+      ease: "outCubic",
     },
     delay
   );

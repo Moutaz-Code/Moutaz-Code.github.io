@@ -5,6 +5,8 @@ import TagChip from "../../ui/components/content/TagChip.astro";
 import PostCard from "../../ui/components/content/PostCard.astro";
 import Prose from "../../ui/components/content/Prose.astro";
 import ResponsiveImage from "../../ui/components/content/ResponsiveImage.astro";
+import CornerFlourish from "../../ui/components/signature/CornerFlourish.astro";
+import SignatureInit from "../../ui/components/signature/SignatureInit.astro";
 
 export async function getStaticPaths() {
   const posts = await contentSource.listPosts();
@@ -44,15 +46,18 @@ const relatedPosts = allPosts
       </a>
     </div>
 
-    <h1 class="text-3xl font-bold tracking-tight mb-3" data-reveal>{title}</h1>
-    <span data-pagefind-meta="type:Post" class="hidden"></span>
-    <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
+    <div class="relative">
+      <CornerFlourish position="top-right" />
+      <h1 class="text-3xl font-bold tracking-tight mb-3" data-reveal>{title}</h1>
+      <span data-pagefind-meta="type:Post" class="hidden"></span>
+      <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
 
-    <div class="flex items-center gap-3 mb-6 text-sm text-(--color-text-muted) flex-wrap">
-      <time datetime={publishedAt.toISOString()}>{formattedDate}</time>
-      <span>&middot;</span>
-      <div class="flex gap-2 flex-wrap">
-        {tags.map((tag) => <TagChip tag={tag} />)}
+      <div class="flex items-center gap-3 mb-6 text-sm text-(--color-text-muted) flex-wrap">
+        <time datetime={publishedAt.toISOString()}>{formattedDate}</time>
+        <span>&middot;</span>
+        <div class="flex gap-2 flex-wrap">
+          {tags.map((tag) => <TagChip tag={tag} />)}
+        </div>
       </div>
     </div>
 
@@ -108,4 +113,5 @@ const relatedPosts = allPosts
     }
     </div>
   </article>
+  <SignatureInit />
 </BaseLayout>

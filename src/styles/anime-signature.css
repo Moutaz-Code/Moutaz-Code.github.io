@@ -16,6 +16,12 @@
   opacity: 0.6;
 }
 
+/* Corner flourish: thinner stroke, lower opacity */
+.corner-flourish-path {
+  stroke-width: 1.5;
+  opacity: 0.5;
+}
+
 /* When JS will animate, hide the stroke initially */
 .hero-signature-svg[data-ready] .hero-signature-path {
   opacity: 0;
@@ -43,6 +49,10 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-signature-svg[data-ready] .hero-signature-path {
     opacity: 0.6;
+  }
+
+  .hero-signature-svg[data-ready] .corner-flourish-path {
+    opacity: 0.5;
   }
 
   .hero-bloom {

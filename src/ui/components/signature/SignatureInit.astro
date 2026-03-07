@@ -1,13 +1,20 @@
 ---
-// SignatureInit — dynamically imports anime.js and kicks off the signature
-// underline animation. Include once per page (after the signature DOM).
+// SignatureInit — dynamically imports anime.js and kicks off signature
+// animations. Handles both underlines and corner flourishes.
+// Include once per page (after the signature DOM).
 ---
 
 <script>
-  const root = document.querySelector<HTMLElement>("[data-signature-root]");
-  if (root) {
+  const roots = document.querySelectorAll<HTMLElement>("[data-signature-root]");
+  if (roots.length > 0) {
     import("../../anime/signature").then(({ initSignature }) => {
-      initSignature(root);
+      roots.forEach((root) => {
+        const isCorner = root.hasAttribute("data-signature-corner");
+        initSignature(root, isCorner
+          ? { duration: 400, delay: 140, targetOpacity: 0.5 }
+          : {}
+        );
+      });
     });
   }
 </script>
