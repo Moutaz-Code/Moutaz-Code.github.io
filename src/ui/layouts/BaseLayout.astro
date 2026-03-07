@@ -3,6 +3,7 @@ import "../../styles/global.css";
 import { siteConfig } from "../../app/siteConfig";
 import HeaderNav from "../components/HeaderNav.astro";
 import MotionInit from "../components/MotionInit.astro";
+import SmoothScrollInit from "../components/SmoothScrollInit.astro";
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
   ogType?: "website" | "article";
   noIndex?: boolean;
   enableMotion?: boolean;
+  enableSmoothScroll?: boolean;
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   ogType = "website",
   noIndex = false,
   enableMotion = false,
+  enableSmoothScroll = false,
 } = Astro.props;
 
 const pageTitle = title
@@ -135,5 +138,6 @@ const socialLabels: Record<string, string> = {
 
     <SpeedInsights />
     {enableMotion && <MotionInit />}
+    {enableSmoothScroll && <SmoothScrollInit />}
   </body>
 </html>

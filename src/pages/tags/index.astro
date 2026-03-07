@@ -7,7 +7,7 @@ import TagChip from "../../ui/components/content/TagChip.astro";
 const allTags = await contentSource.listTags();
 ---
 
-<BaseLayout title="Tags" description="Browse projects and posts by topic." enableMotion>
+<BaseLayout title="Tags" description="Browse projects and posts by topic." enableMotion enableSmoothScroll>
   <section class="py-8">
     <PageHeader
       title="Tags"
