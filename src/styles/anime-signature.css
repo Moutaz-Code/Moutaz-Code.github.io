@@ -1,0 +1,51 @@
+/* ── Hero signature stroke + bloom ────────────────── */
+
+/* SVG signature stroke — visible by default (no-JS / reduced-motion fallback) */
+.hero-signature-svg {
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hero-signature-path {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.6;
+}
+
+/* When JS will animate, hide the stroke initially */
+.hero-signature-svg[data-ready] .hero-signature-path {
+  opacity: 0;
+}
+
+/* ── Bloom (accent glow behind CTA area) ─────────── */
+.hero-bloom {
+  position: absolute;
+  pointer-events: none;
+  width: 280px;
+  height: 120px;
+  border-radius: 9999px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--color-accent) 0%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  opacity: 0;
+  transform: scale(0.92);
+  z-index: -1;
+}
+
+/* ── Reduced motion: show stroke instantly, hide bloom ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-signature-svg[data-ready] .hero-signature-path {
+    opacity: 0.6;
+  }
+
+  .hero-bloom {
+    display: none;
+  }
+}
