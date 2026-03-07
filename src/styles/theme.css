@@ -32,10 +32,13 @@
   --color-status-completed-bg: #f3f4f6;
 
   /* Ambient */
-  --ambient-1: rgba(99, 102, 241, 0.18);   /* indigo */
-  --ambient-2: rgba(59, 130, 246, 0.14);   /* blue */
-  --ambient-3: rgba(168, 85, 247, 0.10);   /* purple */
+  --ambient-1: rgba(99, 102, 241, 0.28);   /* indigo */
+  --ambient-2: rgba(59, 130, 246, 0.22);   /* blue */
+  --ambient-3: rgba(168, 85, 247, 0.18);   /* purple */
+  --ambient-4: rgba(20, 184, 166, 0.20);   /* teal */
+  --ambient-5: rgba(244, 63, 94, 0.16);    /* rose */
   --ambient-grain-opacity: 0.06;
+  --ambient-fill-opacity: 0.02;
 }
 
 html.theme-dark {
@@ -66,8 +69,11 @@ html.theme-dark {
   --color-status-completed-bg: #27272a;
 
   /* Ambient */
-  --ambient-1: rgba(99, 102, 241, 0.12);
-  --ambient-2: rgba(59, 130, 246, 0.10);
-  --ambient-3: rgba(168, 85, 247, 0.08);
+  --ambient-1: rgba(99, 102, 241, 0.30);
+  --ambient-2: rgba(59, 130, 246, 0.26);
+  --ambient-3: rgba(168, 85, 247, 0.24);
+  --ambient-4: rgba(20, 184, 166, 0.24);
+  --ambient-5: rgba(244, 63, 94, 0.22);
   --ambient-grain-opacity: 0.04;
+  --ambient-fill-opacity: 0.2;
 }
