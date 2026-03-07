@@ -13,17 +13,18 @@
   display: block;
 }
 
-/* Hide native cursor when custom cursor is active */
-.cursor-root.cursor--active ~ *,
-.cursor-root.cursor--active ~ * * {
+/* Hide native cursor globally when custom cursor is active.
+   The .cursor-active class is set on <html> by CursorInit. */
+html.cursor-active,
+html.cursor-active * {
   cursor: none !important;
 }
 
 /* Restore native cursor for text inputs */
-.cursor-root.cursor--active ~ * input,
-.cursor-root.cursor--active ~ * textarea,
-.cursor-root.cursor--active ~ * select,
-.cursor-root.cursor--active ~ * [contenteditable] {
+html.cursor-active input,
+html.cursor-active textarea,
+html.cursor-active select,
+html.cursor-active [contenteditable] {
   cursor: text !important;
 }
 
@@ -32,11 +33,11 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 9999px;
   background-color: var(--color-text);
-  opacity: 0.8;
+  opacity: 0.9;
   transform: translate3d(-50%, -50%, 0);
   transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
   pointer-events: none;
@@ -51,7 +52,7 @@
   height: 36px;
   border-radius: 9999px;
   border: 1.5px solid var(--color-text);
-  opacity: 0.15;
+  opacity: 0.22;
   transform: translate3d(-50%, -50%, 0);
   transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
   pointer-events: none;
@@ -87,7 +88,7 @@
   width: 44px;
   height: 44px;
   border-color: var(--color-accent);
-  opacity: 0.25;
+  opacity: 0.30;
 }
 
 .cursor-root.cursor--link .cursor-dot {
@@ -100,7 +101,7 @@
   height: 48px;
   border-color: var(--color-accent);
   background-color: var(--color-accent);
-  opacity: 0.08;
+  opacity: 0.12;
 }
 
 .cursor-root.cursor--button .cursor-dot {
@@ -112,12 +113,12 @@
   width: 56px;
   height: 56px;
   border-color: var(--color-accent);
-  opacity: 0.2;
+  opacity: 0.25;
 }
 
 .cursor-root.cursor--card .cursor-dot {
   background-color: var(--color-accent);
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 /* Text: shrink to near-invisible, let native I-beam work */

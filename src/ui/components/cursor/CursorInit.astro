@@ -20,6 +20,7 @@
   if (!reduced && !isCoarse && root && dot && ring && label) {
     // Activate the cursor layer
     root.classList.add("cursor--active");
+    document.documentElement.classList.add("cursor-active");
 
     // ── Pointer state ──────────────────────────────────
     let targetX = -100;
