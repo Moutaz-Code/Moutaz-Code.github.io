@@ -33,7 +33,7 @@ const relatedPosts = allPosts
   .slice(0, 3);
 ---
 
-<BaseLayout title={title} description={excerpt} ogType="article" ogImage={coverImage}>
+<BaseLayout title={title} description={excerpt} ogType="article" ogImage={coverImage} enableMotion>
   <article class="py-8" data-pagefind-body>
     <div class="mb-8" data-pagefind-ignore>
       <a
@@ -44,7 +44,7 @@ const relatedPosts = allPosts
       </a>
     </div>
 
-    <h1 class="text-3xl font-bold tracking-tight mb-3">{title}</h1>
+    <h1 class="text-3xl font-bold tracking-tight mb-3" data-reveal>{title}</h1>
     <span data-pagefind-meta="type:Post" class="hidden"></span>
     <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
 

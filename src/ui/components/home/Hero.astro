@@ -3,7 +3,7 @@ import ButtonLink from "../primitives/ButtonLink.astro";
 import { profileConfig } from "../../../app/profileConfig";
 ---
 
-<section class="py-16 sm:py-24">
+<section class="py-16 sm:py-24" data-reveal data-reveal-stagger="children">
   <p
     class="text-sm font-medium tracking-wide uppercase text-(--color-accent) mb-3"
   >
@@ -11,6 +11,7 @@ import { profileConfig } from "../../../app/profileConfig";
   </p>
   <h1
     class="text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4"
+    data-accent="pop"
   >
     Hi, I'm {profileConfig.name}
   </h1>

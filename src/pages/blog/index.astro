@@ -15,6 +15,7 @@ const blogTags = allTags
 <BaseLayout
   title="Blog"
   description="Posts about software engineering, architecture, and creative coding."
+  enableMotion
 >
   <section class="py-8">
     <PageHeader
@@ -24,7 +25,7 @@ const blogTags = allTags
 
     <BlogFilterBar allTags={blogTags} />
 
-    <ul class="space-y-6 list-none p-0">
+    <ul class="space-y-6 list-none p-0" data-reveal data-reveal-stagger="children">
       {
         allPosts.map((post) => (
           <div data-tags={post.tags.join(",")} data-filter-item>

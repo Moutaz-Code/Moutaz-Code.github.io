@@ -15,6 +15,7 @@ const projectTags = allTags
 <BaseLayout
   title="Projects"
   description="Selected work, experiments, and ongoing builds."
+  enableMotion
 >
   <section class="py-8">
     <PageHeader
@@ -24,7 +25,7 @@ const projectTags = allTags
 
     <ProjectsFilterBar allTags={projectTags} />
 
-    <div id="projects-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="projects-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal data-reveal-stagger="children">
       {
         allProjects.map((project) => (
           <div

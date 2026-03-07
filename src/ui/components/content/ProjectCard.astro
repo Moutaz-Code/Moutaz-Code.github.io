@@ -21,7 +21,7 @@ const displayTags = tags.slice(0, 3);
 const extraCount = tags.length - displayTags.length;
 ---
 
-<Card href={`/projects/${slug}`} class={featured ? "border-(--color-accent)/30" : undefined}>
+<Card href={`/projects/${slug}`} class={featured ? "border-(--color-accent)/30" : undefined} data-hover="lift">
   {
     primaryImage && (
       <div class="aspect-video overflow-hidden rounded mb-3">

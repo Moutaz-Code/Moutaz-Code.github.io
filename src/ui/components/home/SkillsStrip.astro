@@ -4,7 +4,7 @@ import { profileConfig } from "../../../app/profileConfig";
 ---
 
 <Section title="Skills" subtitle="Technologies I work with regularly.">
-  <div class="flex gap-2 flex-wrap">
+  <div class="flex gap-2 flex-wrap" data-reveal data-reveal-stagger="children">
     {
       profileConfig.skills.map((skill) => (
         <span class="inline-block rounded-full border border-(--color-border) px-3 py-1 text-xs font-medium text-(--color-text-muted)">

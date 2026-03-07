@@ -12,7 +12,7 @@ const featuredProjects = await contentSource.listProjects({ featuredOnly: true, 
 const latestPosts = await contentSource.listPosts({ limit: 2 });
 ---
 
-<BaseLayout>
+<BaseLayout enableMotion>
   <Hero />
   <FeaturedProjects projects={featuredProjects} />
   <SkillsStrip />

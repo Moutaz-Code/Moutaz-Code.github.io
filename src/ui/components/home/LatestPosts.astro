@@ -11,7 +11,7 @@ const { posts } = Astro.props;
 ---
 
 <Section title="Latest Writing" subtitle="Recent blog posts.">
-  <ul class="space-y-4 list-none p-0">
+  <ul class="space-y-4 list-none p-0" data-reveal data-reveal-stagger="children">
     {
       posts.map((post) => (
         <PostCard

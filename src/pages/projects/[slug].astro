@@ -29,7 +29,7 @@ const relatedProjects = allProjects
   .slice(0, 3);
 ---
 
-<BaseLayout title={title} description={summary} ogImage={project.primaryImage?.src}>
+<BaseLayout title={title} description={summary} ogImage={project.primaryImage?.src} enableMotion>
   <article class="py-8" data-pagefind-body>
     <div class="mb-8" data-pagefind-ignore>
       <a
@@ -40,7 +40,7 @@ const relatedProjects = allProjects
       </a>
     </div>
 
-    <h1 class="text-3xl font-bold tracking-tight mb-3">{title}</h1>
+    <h1 class="text-3xl font-bold tracking-tight mb-3" data-reveal>{title}</h1>
     <span data-pagefind-meta="type:Project" class="hidden"></span>
     <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
 

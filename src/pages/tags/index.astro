@@ -7,14 +7,14 @@ import TagChip from "../../ui/components/content/TagChip.astro";
 const allTags = await contentSource.listTags();
 ---
 
-<BaseLayout title="Tags" description="Browse projects and posts by topic.">
+<BaseLayout title="Tags" description="Browse projects and posts by topic." enableMotion>
   <section class="py-8">
     <PageHeader
       title="Tags"
       subtitle="Browse projects and posts by topic."
     />
 
-    <div class="space-y-4">
+    <div class="space-y-4" data-reveal data-reveal-stagger="children">
       {
         allTags.map((tag) => (
           <a

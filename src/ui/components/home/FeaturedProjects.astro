@@ -11,7 +11,7 @@ const { projects } = Astro.props;
 ---
 
 <Section title="Featured Projects" subtitle="A few things I've built.">
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal data-reveal-stagger="children">
     {
       projects.map((project) => (
         <ProjectCard
