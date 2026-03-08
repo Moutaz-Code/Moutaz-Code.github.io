@@ -1,6 +1,7 @@
 import { createTimeline } from "animejs/timeline";
 import { createDrawable } from "animejs/svg";
 import { animate } from "animejs/animation";
+import { prefersReducedMotion } from "../runtime/prefs";
 
 export interface SignatureOptions {
   duration?: number;
@@ -22,7 +23,7 @@ export function initSignature(
   const { duration = 550, delay = 80, targetOpacity = 0.6 } = opts;
 
   // ── Guard: reduced motion ──────────────────────────
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (prefersReducedMotion()) return;
 
   // ── Resolve DOM targets ────────────────────────────
   const svg = root.querySelector<SVGSVGElement>("[data-signature-svg]");
@@ -67,7 +68,7 @@ export function initDivider(
 ): void {
   const { duration = 700 } = opts;
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (prefersReducedMotion()) return;
 
   const svg = root.querySelector<SVGSVGElement>("[data-divider-svg]");
   const pathEl = root.querySelector<SVGPathElement>("[data-divider-path]");
@@ -106,7 +107,7 @@ export function initSpark(
   container: HTMLElement,
   startDelay = 300
 ): void {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (prefersReducedMotion()) return;
 
   const dots = container.querySelectorAll<HTMLElement>("[data-spark-dot]");
   if (!dots.length) return;

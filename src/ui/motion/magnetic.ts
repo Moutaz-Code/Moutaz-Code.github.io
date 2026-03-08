@@ -4,12 +4,14 @@
  * On pointerleave it lerps back to center. Uses RAF only while active.
  */
 
+import { prefersReducedMotion } from "../runtime/prefs";
+
 const MAX_OFFSET = 6; // px — maximum translation
 const LERP_SPEED = 0.15; // smoothing factor (0–1, lower = smoother)
 const RETURN_SPEED = 0.1; // lerp speed when returning to center
 
 export function initMagnetic(el: HTMLElement): () => void {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (prefersReducedMotion()) {
     return () => {};
   }
 
