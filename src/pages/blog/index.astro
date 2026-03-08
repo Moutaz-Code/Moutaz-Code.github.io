@@ -5,6 +5,8 @@ import PageHeader from "../../ui/components/primitives/PageHeader.astro";
 import PostCard from "../../ui/components/content/PostCard.astro";
 import BlogFilterBar from "../../ui/components/content/BlogFilterBar.astro";
 import SignatureInit from "../../ui/components/signature/SignatureInit.astro";
+import SectionDivider from "../../ui/components/signature/SectionDivider.astro";
+import DividerInit from "../../ui/components/signature/DividerInit.astro";
 
 const allPosts = await contentSource.listPosts();
 const allTags = await contentSource.listTags();
@@ -28,6 +30,8 @@ const blogTags = allTags
       subtitle="Posts about software engineering, architecture, and creative coding."
       enableSignature
     />
+
+    <SectionDivider variant="wave" class="mb-6" />
 
     <BlogFilterBar allTags={blogTags} />
 
@@ -59,6 +63,7 @@ const blogTags = allTags
     </p>
   </section>
   <SignatureInit />
+  <DividerInit />
 </BaseLayout>
 
 <script>

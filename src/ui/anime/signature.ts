@@ -55,6 +55,47 @@ export function initSignature(
 }
 
 /**
+ * Animates a section divider stroke draw. Called once when the divider
+ * enters the viewport. Fire-and-forget.
+ *
+ * @param root Element with [data-divider-root]
+ * @param opts Duration override
+ */
+export function initDivider(
+  root: HTMLElement,
+  opts: { duration?: number } = {}
+): void {
+  const { duration = 700 } = opts;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const svg = root.querySelector<SVGSVGElement>("[data-divider-svg]");
+  const pathEl = root.querySelector<SVGPathElement>("[data-divider-path]");
+
+  if (!svg || !pathEl) return;
+
+  svg.setAttribute("data-ready", "");
+
+  const drawables = createDrawable(pathEl);
+  if (!drawables.length) return;
+  const drawable = drawables[0];
+
+  createTimeline({
+    autoplay: true,
+    defaults: { ease: "inOutSine" },
+  }).add(
+    drawable,
+    {
+      draw: ["0 0", "0 1"],
+      opacity: [0, 0.4],
+      duration,
+      ease: "outCubic",
+    },
+    60
+  );
+}
+
+/**
  * Animates corner spark dots — tiny accent dots that fade in, drift
  * outward, then fade out near a corner flourish. Fire-and-forget.
  *

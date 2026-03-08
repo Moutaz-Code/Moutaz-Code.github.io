@@ -9,6 +9,8 @@ import ExperienceSection from "../ui/components/home/ExperienceSection.astro";
 import LatestPosts from "../ui/components/home/LatestPosts.astro";
 import ContactCTA from "../ui/components/home/ContactCTA.astro";
 import MagneticInit from "../ui/components/motion/MagneticInit.astro";
+import SectionDivider from "../ui/components/signature/SectionDivider.astro";
+import DividerInit from "../ui/components/signature/DividerInit.astro";
 
 const featuredProjects = await contentSource.listProjects({ featuredOnly: true, limit: 3 });
 const latestPosts = await contentSource.listPosts({ limit: 2 });
@@ -16,11 +18,15 @@ const latestPosts = await contentSource.listPosts({ limit: 2 });
 
 <BaseLayout enableMotion enableSmoothScroll enableAmbient enableCursor>
   <HeroSignature />
+  <SectionDivider variant="wave" class="my-4" />
   <FeaturedProjects projects={featuredProjects} />
+  <SectionDivider variant="circuit" class="my-4" />
   <SkillsStrip />
+  <SectionDivider variant="harmonic" class="my-4" />
   <ExperienceSection />
   <LatestPosts posts={latestPosts} />
   <ContactCTA />
   <HeroSignatureInit />
   <MagneticInit />
+  <DividerInit />
 </BaseLayout>

@@ -5,6 +5,8 @@ import PageHeader from "../../ui/components/primitives/PageHeader.astro";
 import ProjectCard from "../../ui/components/content/ProjectCard.astro";
 import ProjectsFilterBar from "../../ui/components/content/ProjectsFilterBar.astro";
 import SignatureInit from "../../ui/components/signature/SignatureInit.astro";
+import SectionDivider from "../../ui/components/signature/SectionDivider.astro";
+import DividerInit from "../../ui/components/signature/DividerInit.astro";
 
 const allProjects = await contentSource.listProjects();
 const allTags = await contentSource.listTags();
@@ -28,6 +30,8 @@ const projectTags = allTags
       subtitle="Selected work, experiments, and ongoing builds."
       enableSignature
     />
+
+    <SectionDivider variant="wave" class="mb-6" />
 
     <ProjectsFilterBar allTags={projectTags} />
 
@@ -61,6 +65,7 @@ const projectTags = allTags
     </p>
   </section>
   <SignatureInit />
+  <DividerInit />
 </BaseLayout>
 
 <script>
