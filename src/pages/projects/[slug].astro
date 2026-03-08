@@ -10,6 +10,9 @@ import ButtonLink from "../../ui/components/primitives/ButtonLink.astro";
 import CornerFlourish from "../../ui/components/signature/CornerFlourish.astro";
 import CornerSpark from "../../ui/components/signature/CornerSpark.astro";
 import SignatureInit from "../../ui/components/signature/SignatureInit.astro";
+import QuickFacts from "../../ui/components/projects/QuickFacts.astro";
+import Highlights from "../../ui/components/projects/Highlights.astro";
+import Results from "../../ui/components/projects/Results.astro";
 
 export async function getStaticPaths() {
   const projects = await contentSource.listProjects();
@@ -22,7 +25,11 @@ const { slug } = Astro.params;
 const project = await contentSource.getProjectBySlug(slug!);
 if (!project) return Astro.redirect("/404");
 
-const { title, summary, status, tags, links, media, content, dateStart, dateEnd } = project;
+const {
+  title, summary, status, tags, links, media, content, dateStart, dateEnd,
+  role, timeframe, stack, highlights, results,
+  problem, constraints, approach, architecture, challenges, lessons, nextSteps,
+} = project;
 const { Content } = content;
 
 // Related projects: share at least one tag, exclude current, max 3
@@ -30,6 +37,22 @@ const allProjects = await contentSource.listProjects();
 const relatedProjects = allProjects
   .filter((p) => p.slug !== slug && p.tags.some((t) => tags.includes(t)))
   .slice(0, 3);
+
+// Determine if we have case study content to show the two-column layout
+const hasQuickFacts = role || timeframe || stack.length > 0 || links.length > 0;
+const hasHighlightsOrResults = highlights.length > 0 || results.length > 0;
+const hasTwoColumnContent = hasQuickFacts || hasHighlightsOrResults;
+
+// Case study sections — array of { title, items } for bullet lists, or { title, text } for paragraphs
+const caseSections = [
+  { title: "Problem", text: problem },
+  { title: "Constraints", items: constraints },
+  { title: "Approach", items: approach },
+  { title: "Architecture", items: architecture },
+  { title: "Challenges", items: challenges },
+  { title: "Lessons Learned", items: lessons },
+  { title: "Next Steps", items: nextSteps },
+].filter((s) => ("text" in s && s.text) || ("items" in s && s.items && s.items.length > 0));
 ---
 
 <BaseLayout title={title} description={summary} ogImage={project.primaryImage?.src} enableMotion enableSmoothScroll enableAmbient ambientVariant="b" enableCursor enablePageTransitions enableSound>
@@ -43,12 +66,15 @@ const relatedProjects = allProjects
       </a>
     </div>
 
+    <!-- Header -->
     <div class="relative">
       <CornerFlourish position="top-right" />
       <CornerSpark position="top-right" />
       <h1 class="text-3xl font-bold tracking-tight mb-3" data-reveal>{title}</h1>
       <span data-pagefind-meta="type:Project" class="hidden"></span>
       <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
+
+      <p class="text-(--color-text-muted) mb-4" data-reveal>{summary}</p>
 
       <div class="flex items-center gap-3 mb-6 flex-wrap">
         <StatusBadge status={status} />
@@ -57,6 +83,37 @@ const relatedProjects = allProjects
         </div>
       </div>
     </div>
+
+    <!-- Two-column: Highlights/Results + Quick Facts -->
+    {
+      hasTwoColumnContent && (
+        <div class:list={[
+          "mb-8",
+          hasQuickFacts && hasHighlightsOrResults ? "lg:grid lg:grid-cols-[1fr_260px] lg:gap-8" : "",
+        ]}>
+          {/* Left: Highlights + Results */}
+          {hasHighlightsOrResults && (
+            <div>
+              <Highlights items={highlights} />
+              <Results items={results} />
+            </div>
+          )}
+
+          {/* Right: Quick Facts */}
+          {hasQuickFacts && (
+            <div class:list={[hasHighlightsOrResults ? "lg:sticky lg:top-24 lg:self-start" : ""]}>
+              <QuickFacts
+                status={status}
+                role={role}
+                timeframe={timeframe}
+                stack={stack}
+                links={links}
+              />
+            </div>
+          )}
+        </div>
+      )
+    }
 
     <!-- Media gallery -->
     {
@@ -67,14 +124,23 @@ const relatedProjects = allProjects
       )
     }
 
-    <!-- Links -->
+    <!-- Case study sections -->
     {
-      links.length > 0 && (
-        <div class="flex gap-3 flex-wrap mb-8">
-          {links.map((link) => (
-            <ButtonLink href={link.url} variant="secondary" external>
-              {link.label}
-            </ButtonLink>
+      caseSections.length > 0 && (
+        <div class="space-y-8 mb-8" data-reveal>
+          {caseSections.map((section) => (
+            <div>
+              <h2 class="text-lg font-semibold mb-3">{section.title}</h2>
+              {"text" in section && section.text ? (
+                <p class="text-sm text-(--color-text-muted)">{section.text}</p>
+              ) : "items" in section && section.items ? (
+                <ul class="space-y-1.5 text-sm list-disc pl-5 text-(--color-text-muted)">
+                  {section.items.map((item: string) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
           ))}
         </div>
       )
@@ -84,6 +150,14 @@ const relatedProjects = allProjects
     <Prose>
       <Content />
     </Prose>
+
+    <!-- Contact CTA -->
+    <div class="mt-10 pt-6 border-t border-(--color-border) text-center" data-pagefind-ignore>
+      <p class="text-(--color-text-muted) mb-3">Interested in this project?</p>
+      <ButtonLink href="/contact" variant="primary" magnetic>
+        Get in Touch
+      </ButtonLink>
+    </div>
 
     <!-- Browse more -->
     <div data-pagefind-ignore>

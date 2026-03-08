@@ -85,6 +85,60 @@ collections:
           - { name: alt, label: Alt Text, widget: string, required: false }
           - { name: caption, label: Caption, widget: string, required: false }
 
+      # Case study fields (all optional)
+      - { name: role, label: Role, widget: string, required: false, hint: "Your role, e.g. 'Solo developer' or 'Frontend lead'" }
+      - { name: timeframe, label: Timeframe, widget: string, required: false, hint: "e.g. Oct 2025 – Present" }
+
+      - name: stack
+        label: Tech Stack
+        widget: list
+        default: []
+        hint: "Technologies used (separate from browsing tags)"
+
+      - name: highlights
+        label: Highlights
+        widget: list
+        default: []
+        hint: "3–6 key bullet points summarizing the project"
+
+      - name: results
+        label: Results
+        widget: list
+        default: []
+        hint: "Measurable or concrete outcomes"
+
+      - { name: problem, label: Problem, widget: text, required: false, hint: "What problem does this project solve?" }
+
+      - name: constraints
+        label: Constraints
+        widget: list
+        default: []
+
+      - name: approach
+        label: Approach
+        widget: list
+        default: []
+
+      - name: architecture
+        label: Architecture
+        widget: list
+        default: []
+
+      - name: challenges
+        label: Challenges
+        widget: list
+        default: []
+
+      - name: lessons
+        label: Lessons Learned
+        widget: list
+        default: []
+
+      - name: nextSteps
+        label: Next Steps
+        widget: list
+        default: []
+
       - { name: body, label: Body, widget: markdown }
 
   - name: posts

@@ -2,7 +2,10 @@
 import BaseLayout from "../ui/layouts/BaseLayout.astro";
 import SignatureUnderline from "../ui/components/signature/SignatureUnderline.astro";
 import SignatureInit from "../ui/components/signature/SignatureInit.astro";
+import ButtonLink from "../ui/components/primitives/ButtonLink.astro";
 import { siteConfig } from "../app/siteConfig";
+
+const email = siteConfig.socialLinks.email?.replace("mailto:", "") ?? "";
 ---
 
 <BaseLayout
@@ -22,77 +25,87 @@ import { siteConfig } from "../app/siteConfig";
       any of the channels below.
     </p>
 
+    <!-- Primary CTA -->
+    {siteConfig.socialLinks.email && (
+      <div class="mb-10">
+        <ButtonLink href={siteConfig.socialLinks.email} variant="primary" magnetic sfx="click">
+          Email Me
+        </ButtonLink>
+      </div>
+    )}
+
+    <!-- Contact channels -->
     <div class="space-y-4 mb-12">
-      {
-        siteConfig.socialLinks.email && (
+      {siteConfig.socialLinks.email && (
+        <div class="flex items-center gap-3">
           <a
             href={siteConfig.socialLinks.email}
             class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
           >
             <span class="text-sm font-medium">Email</span>
-            <span class="text-sm text-(--color-text-muted)">
-              {siteConfig.socialLinks.email.replace("mailto:", "")}
-            </span>
+            <span class="text-sm text-(--color-text-muted)">{email}</span>
           </a>
-        )
-      }
-      {
-        siteConfig.socialLinks.github && (
-          <a
-            href={siteConfig.socialLinks.github}
-            class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
+          <button
+            type="button"
+            id="copy-email-btn"
+            data-email={email}
+            class="text-xs px-2 py-1 rounded border border-(--color-border) text-(--color-text-muted) hover:border-(--color-accent) hover:text-(--color-accent) transition-colors cursor-pointer"
           >
-            <span class="text-sm font-medium">GitHub</span>
-            <span class="text-sm text-(--color-text-muted)">
-              {siteConfig.socialLinks.github}
-            </span>
-          </a>
-        )
-      }
-      {
-        siteConfig.socialLinks.linkedin && (
-          <a
-            href={siteConfig.socialLinks.linkedin}
-            class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
-          >
-            <span class="text-sm font-medium">LinkedIn</span>
-            <span class="text-sm text-(--color-text-muted)">
-              {siteConfig.socialLinks.linkedin}
-            </span>
-          </a>
-        )
-      }
-    </div>
-
-    <!-- Contact form placeholder -->
-    <div class="rounded-lg border border-(--color-border) p-6">
-      <h2 class="text-lg font-semibold mb-2">Send a Message</h2>
-      <p class="text-sm text-(--color-text-muted) mb-4">
-        Contact form coming in a later phase. For now, use the links above.
-      </p>
-      <div class="space-y-4 opacity-50 pointer-events-none select-none">
-        <input
-          type="text"
-          placeholder="Your name"
-          class="w-full rounded-lg border border-(--color-border) px-4 py-2 text-sm"
-        />
-        <input
-          type="email"
-          placeholder="Your email"
-          class="w-full rounded-lg border border-(--color-border) px-4 py-2 text-sm"
-        />
-        <textarea
-          placeholder="Your message"
-          rows="4"
-          class="w-full rounded-lg border border-(--color-border) px-4 py-2 text-sm"
-        ></textarea>
-        <button
-          class="px-5 py-2 rounded-lg bg-(--color-accent) text-white text-sm font-medium"
+            Copy
+          </button>
+        </div>
+      )}
+      {siteConfig.socialLinks.github && (
+        <a
+          href={siteConfig.socialLinks.github}
+          target="_blank"
+          rel="noreferrer"
+          class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
         >
-          Send
-        </button>
-      </div>
+          <span class="text-sm font-medium">GitHub</span>
+          <span class="text-sm text-(--color-text-muted)">{siteConfig.socialLinks.github}</span>
+          <span class="text-xs text-(--color-text-muted)">&#x2197;</span>
+        </a>
+      )}
+      {siteConfig.socialLinks.linkedin && (
+        <a
+          href={siteConfig.socialLinks.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
+        >
+          <span class="text-sm font-medium">LinkedIn</span>
+          <span class="text-sm text-(--color-text-muted)">{siteConfig.socialLinks.linkedin}</span>
+          <span class="text-xs text-(--color-text-muted)">&#x2197;</span>
+        </a>
+      )}
     </div>
   </section>
   <SignatureInit />
 </BaseLayout>
+
+<script>
+  const btn = document.getElementById("copy-email-btn");
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      const email = btn.getAttribute("data-email") ?? "";
+      try {
+        await navigator.clipboard.writeText(email);
+        const original = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      } catch {
+        // Fallback: select text in a temporary input
+        const input = document.createElement("input");
+        input.value = email;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        document.body.removeChild(input);
+        const original = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      }
+    });
+  }
+</script>

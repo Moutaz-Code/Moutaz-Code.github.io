@@ -32,6 +32,43 @@ media:
     src: https://res.cloudinary.com/dnal0wnob/image/upload/v1772842879/giphy_x3erca.gif
     alt: omage
     caption: ''
+role: Solo Developer
+timeframe: Mar 2026 – Present
+stack:
+  - Astro
+  - TypeScript
+  - Tailwind CSS
+  - MDX
+  - Sveltia CMS
+highlights:
+  - Built a full portfolio site with case study support
+  - Integrated Sveltia CMS for headless content management
+  - Implemented responsive media gallery with lightbox
+  - Added constellation background animation with RAF optimization
+  - Designed ports & adapters architecture for content layer
+results:
+  - 95+ Lighthouse performance score
+  - Zero layout shift on page transitions
+  - Sub-second static page loads on Vercel
+problem: Needed a portfolio site that could showcase projects as detailed case studies while remaining easy to update through a CMS, without sacrificing performance or design quality.
+approach:
+  - Started with Astro v5 for static generation and MDX support
+  - Adopted ports & adapters architecture to decouple content from presentation
+  - Used Tailwind CSS v4 for utility-first styling with custom design tokens
+  - Integrated Sveltia CMS for git-based content management
+architecture:
+  - Content schema defined with Zod validation in config.ts
+  - Domain models separate content shape from view requirements
+  - MdxContentSource adapter bridges Astro collections to domain types
+  - Pages consume ProjectDetail / PostDetail view types
+challenges:
+  - Balancing rich animations with accessibility and performance
+  - Keeping CMS schema flat while supporting complex case study data
+  - Ensuring backward compatibility when adding new optional fields
+lessons:
+  - Flat frontmatter fields are more CMS-friendly than nested objects
+  - RAF loops should pause when the tab is hidden to save resources
+  - Optional fields with safe defaults make schema evolution painless
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eros libero, vestibulum nec gravida eu, sodales ac turpis. Cras vitae ex vitae augue lobortis porta at scelerisque velit. Integer dolor sapien, congue non aliquam vitae, ullamcorper non massa. Vivamus quis arcu aliquet, ullamcorper ipsum eget, feugiat tortor. Maecenas porta justo vitae lectus facilisis rutrum consequat ullamcorper dui. Ut in libero sed quam euismod consequat. Aenean odio orci, facilisis a dui eu, lacinia hendrerit augue. Proin elementum lacinia placerat. Phasellus convallis dolor in mi vestibulum accumsan et ac sem. Nunc feugiat hendrerit odio, nec ullamcorper risus. Vestibulum euismod lacus leo, sed faucibus ligula porta at. Nulla quis nisi a urna sagittis varius. Duis eget lobortis ligula, sed vehicula odio. Sed vel ullamcorper ex. Etiam orci ex, eleifend vitae nisl id, posuere ullamcorper nulla. Suspendisse sed tincidunt mauris.

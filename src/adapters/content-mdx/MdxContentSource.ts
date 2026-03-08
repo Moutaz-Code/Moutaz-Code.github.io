@@ -120,6 +120,18 @@ export class MdxContentSource implements ContentSource {
         Content: rendered.Content,
         headings: rendered.headings,
       },
+      role: entry.data.role,
+      timeframe: entry.data.timeframe,
+      stack: entry.data.stack ?? [],
+      highlights: entry.data.highlights ?? [],
+      results: entry.data.results ?? [],
+      problem: entry.data.problem,
+      constraints: entry.data.constraints ?? [],
+      approach: entry.data.approach ?? [],
+      architecture: entry.data.architecture ?? [],
+      challenges: entry.data.challenges ?? [],
+      lessons: entry.data.lessons ?? [],
+      nextSteps: entry.data.nextSteps ?? [],
     };
   }
 

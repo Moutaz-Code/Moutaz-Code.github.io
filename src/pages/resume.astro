@@ -1,10 +1,12 @@
 ---
 import BaseLayout from "../ui/layouts/BaseLayout.astro";
+import ButtonLink from "../ui/components/primitives/ButtonLink.astro";
 ---
 
 <BaseLayout
   title="Resume"
   description="Download my resume or view it online."
+  enableMotion
   enableSmoothScroll
   enableAmbient
   ambientVariant="b"
@@ -18,19 +20,39 @@ import BaseLayout from "../ui/layouts/BaseLayout.astro";
       Download a copy of my resume or view the highlights below.
     </p>
 
-    <div class="mb-10">
-      <a
-        href="/resume.pdf"
-        class="inline-flex items-center px-5 py-2.5 rounded-lg bg-(--color-accent) text-white font-medium no-underline hover:bg-(--color-accent-hover) transition-colors"
-      >
+    <div class="flex gap-3 mb-10 flex-wrap">
+      <ButtonLink href="/resume.pdf" variant="primary" magnetic>
         Download PDF
-      </a>
-      <p class="text-xs text-(--color-text-muted) mt-2">
-        PDF not uploaded yet — placeholder link.
-      </p>
+      </ButtonLink>
+      <ButtonLink href="/resume.pdf" variant="secondary" external>
+        Open in New Tab
+      </ButtonLink>
     </div>
 
-    <!-- Resume highlights -->
+    <!-- Resume Highlights -->
+    <div class="mb-10" data-reveal>
+      <h2 class="text-xl font-semibold mb-4">Highlights</h2>
+      <ul class="space-y-2 text-sm">
+        <li class="flex gap-2">
+          <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-(--color-accent)"></span>
+          <span>Passionate about building polished, performant web experiences</span>
+        </li>
+        <li class="flex gap-2">
+          <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-(--color-accent)"></span>
+          <span>Strong focus on TypeScript, modern frameworks, and clean architecture</span>
+        </li>
+        <li class="flex gap-2">
+          <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-(--color-accent)"></span>
+          <span>Experience with game development using Unity and C#</span>
+        </li>
+        <li class="flex gap-2">
+          <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-(--color-accent)"></span>
+          <span>Comfortable working across the full stack — frontend, backend, and tooling</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Resume sections -->
     <div class="space-y-8">
       <div>
         <h2 class="text-xl font-semibold mb-3">Education</h2>

@@ -16,4 +16,16 @@ export type Project = {
   media: Media[];
   body: string;
   updatedAt?: string;
+  role?: string;
+  timeframe?: string;
+  stack: string[];
+  highlights: string[];
+  results: string[];
+  problem?: string;
+  constraints: string[];
+  approach: string[];
+  architecture: string[];
+  challenges: string[];
+  lessons: string[];
+  nextSteps: string[];
 };

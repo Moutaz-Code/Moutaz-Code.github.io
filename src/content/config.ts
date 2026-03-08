@@ -29,6 +29,20 @@ const projects = defineCollection({
 
       links: z.array(linkSchema).default([]),
       media: z.array(mediaSchema).default([]),
+
+      // Case study fields (all optional — backward compatible)
+      role: z.string().optional(),
+      timeframe: z.string().optional(),
+      stack: z.array(z.string()).default([]),
+      highlights: z.array(z.string()).default([]),
+      results: z.array(z.string()).default([]),
+      problem: z.string().optional(),
+      constraints: z.array(z.string()).default([]),
+      approach: z.array(z.string()).default([]),
+      architecture: z.array(z.string()).default([]),
+      challenges: z.array(z.string()).default([]),
+      lessons: z.array(z.string()).default([]),
+      nextSteps: z.array(z.string()).default([]),
     })
     .refine(
       (d) => !(d.dateStart && d.dateEnd) || d.dateEnd >= d.dateStart,
