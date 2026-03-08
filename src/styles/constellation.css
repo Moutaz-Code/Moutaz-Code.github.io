@@ -5,7 +5,7 @@
   position: relative;
   width: 100%;
   height: 220px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media (min-width: 640px) {
@@ -131,6 +131,7 @@
 }
 
 .constellation-line {
+  fill: none;
   stroke: var(--color-border);
   stroke-width: 1;
   opacity: 0.25;
