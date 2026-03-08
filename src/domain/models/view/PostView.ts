@@ -5,7 +5,7 @@ export type PostSummary = {
   slug: string;
   excerpt: string;
   tags: string[];
-  publishedAt: Date;
+  publishedAt?: Date;
   coverImage?: string;
 };
 

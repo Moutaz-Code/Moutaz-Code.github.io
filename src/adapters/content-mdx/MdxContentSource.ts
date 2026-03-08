@@ -154,10 +154,12 @@ export class MdxContentSource implements ContentSource {
       summaries = summaries.filter((p) => p.tags.includes(filters.tag!));
     }
 
-    // Sort newest first
-    summaries.sort(
-      (a, b) => b.publishedAt.getTime() - a.publishedAt.getTime(),
-    );
+    // Sort newest first (posts without a date go last)
+    summaries.sort((a, b) => {
+      const ta = a.publishedAt ? a.publishedAt.getTime() : 0;
+      const tb = b.publishedAt ? b.publishedAt.getTime() : 0;
+      return tb - ta;
+    });
 
     // Pagination
     const offset = filters?.offset ?? 0;

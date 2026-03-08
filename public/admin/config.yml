@@ -36,7 +36,7 @@ collections:
 
     fields:
       - { name: title, label: Title, widget: string }
-      - { name: summary, label: Summary, widget: text }
+      - { name: summary, label: Summary, widget: text, required: false }
 
       - name: tags
         label: Tags
@@ -155,14 +155,14 @@ collections:
 
     fields:
       - { name: title, label: Title, widget: string }
-      - { name: excerpt, label: Excerpt, widget: text }
+      - { name: excerpt, label: Excerpt, widget: text, required: false }
 
       - name: tags
         label: Tags
         widget: list
         default: []
 
-      - { name: publishedAt, label: Published Date, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { name: publishedAt, label: Published Date, widget: datetime, required: false, date_format: "YYYY-MM-DD", time_format: false }
 
       # When Cloudinary is enabled, Sveltia should insert a Cloudinary URL here.
       - { name: coverImage, label: Cover Image, widget: image, required: false }

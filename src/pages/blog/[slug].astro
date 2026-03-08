@@ -23,7 +23,7 @@ if (!post) return Astro.redirect("/404");
 const { title, excerpt, publishedAt, tags, coverImage, content } = post;
 const { Content } = content;
 
-const formattedDate = publishedAt.toLocaleDateString("en-US", {
+const formattedDate = publishedAt?.toLocaleDateString("en-US", {
   year: "numeric",
   month: "short",
   day: "numeric",
@@ -55,8 +55,8 @@ const relatedPosts = allPosts
       <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
 
       <div class="flex items-center gap-3 mb-6 text-sm text-(--color-text-muted) flex-wrap">
-        <time datetime={publishedAt.toISOString()}>{formattedDate}</time>
-        <span>&middot;</span>
+        {publishedAt && <time datetime={publishedAt.toISOString()}>{formattedDate}</time>}
+        {publishedAt && tags.length > 0 && <span>&middot;</span>}
         <div class="flex gap-2 flex-wrap">
           {tags.map((tag) => <TagChip tag={tag} />)}
         </div>
@@ -105,7 +105,11 @@ const relatedPosts = allPosts
                 slug={rp.slug}
                 excerpt={rp.excerpt}
                 tags={rp.tags}
-                publishedAt={rp.publishedAt}
+                publishedAt={rp.publishedAt?.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
                 coverImage={rp.coverImage}
               />
             ))}

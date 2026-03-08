@@ -7,7 +7,7 @@ interface Props {
   slug: string;
   excerpt: string;
   tags: string[];
-  publishedAt: string;
+  publishedAt?: string;
   coverImage?: string;
 }
 
@@ -44,7 +44,7 @@ const extraCount = tags.length - displayTags.length;
       {excerpt}
     </p>
     <div class="flex items-center gap-3 flex-wrap">
-      <time class="text-xs text-(--color-text-muted)">{publishedAt}</time>
+      {publishedAt && <time class="text-xs text-(--color-text-muted)">{publishedAt}</time>}
       <div class="flex gap-1.5">
         {displayTags.map((tag) => <TagChip tag={tag} interactive={false} />)}
         {

@@ -17,9 +17,9 @@ const projects = defineCollection({
   schema: z
     .object({
       title: z.string().min(1),
-      summary: z.string().min(1),
+      summary: z.string().default(""),
       tags: z.array(z.string().min(1)).default([]),
-      status: z.enum(["ongoing", "completed"]),
+      status: z.enum(["ongoing", "completed"]).default("ongoing"),
       featured: z.boolean().default(false),
 
       slug: z.string().min(1).optional(),
@@ -54,9 +54,9 @@ const posts = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string().min(1),
-    excerpt: z.string().min(1),
+    excerpt: z.string().default(""),
     tags: z.array(z.string().min(1)).default([]),
-    publishedAt: z.coerce.date(),
+    publishedAt: z.coerce.date().optional(),
     slug: z.string().min(1).optional(),
     coverImage: z.string().min(1).optional(),
   }),
