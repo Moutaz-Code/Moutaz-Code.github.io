@@ -41,11 +41,13 @@ collections:
       - name: tags
         label: Tags
         widget: list
+        required: false
         default: []
 
       - name: status
         label: Status
         widget: select
+        required: false
         options:
           - { label: Ongoing, value: ongoing }
           - { label: Completed, value: completed }
@@ -59,6 +61,7 @@ collections:
       - name: links
         label: Links
         widget: list
+        required: false
         default: []
         fields:
           - { name: label, label: Label, widget: string }
@@ -67,6 +70,7 @@ collections:
       - name: media
         label: Media
         widget: list
+        required: false
         default: []
         fields:
           - name: type
@@ -92,18 +96,21 @@ collections:
       - name: stack
         label: Tech Stack
         widget: list
+        required: false
         default: []
         hint: "Technologies used (separate from browsing tags)"
 
       - name: highlights
         label: Highlights
         widget: list
+        required: false
         default: []
         hint: "3–6 key bullet points summarizing the project"
 
       - name: results
         label: Results
         widget: list
+        required: false
         default: []
         hint: "Measurable or concrete outcomes"
 
@@ -112,31 +119,37 @@ collections:
       - name: constraints
         label: Constraints
         widget: list
+        required: false
         default: []
 
       - name: approach
         label: Approach
         widget: list
+        required: false
         default: []
 
       - name: architecture
         label: Architecture
         widget: list
+        required: false
         default: []
 
       - name: challenges
         label: Challenges
         widget: list
+        required: false
         default: []
 
       - name: lessons
         label: Lessons Learned
         widget: list
+        required: false
         default: []
 
       - name: nextSteps
         label: Next Steps
         widget: list
+        required: false
         default: []
 
       - { name: body, label: Body, widget: markdown }
@@ -160,6 +173,7 @@ collections:
       - name: tags
         label: Tags
         widget: list
+        required: false
         default: []
 
       - { name: publishedAt, label: Published Date, widget: datetime, required: false, date_format: "YYYY-MM-DD", time_format: false }
