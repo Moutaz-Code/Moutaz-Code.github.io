@@ -9,6 +9,7 @@ import AmbientLayer from "../components/ambient/AmbientLayer.astro";
 import AmbientInit from "../components/ambient/AmbientInit.astro";
 import CursorLayer from "../components/cursor/CursorLayer.astro";
 import CursorInit from "../components/cursor/CursorInit.astro";
+import PageTransitionInit from "../components/transitions/PageTransitionInit.astro";
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
   enableAmbient?: boolean;
   ambientVariant?: "a" | "b" | "c";
   enableCursor?: boolean;
+  enablePageTransitions?: boolean;
 }
 
 const {
@@ -35,6 +37,7 @@ const {
   enableAmbient = false,
   ambientVariant = "a",
   enableCursor = false,
+  enablePageTransitions = false,
 } = Astro.props;
 
 const pageTitle = title
@@ -76,6 +79,16 @@ const socialLabels: Record<string, string> = {
         if (dark) document.documentElement.classList.add('theme-dark');
       })();
     </script>
+
+    {enablePageTransitions && (
+      <script is:inline>
+        (function(){
+          if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('is-entering');
+          }
+        })();
+      </script>
+    )}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -179,5 +192,6 @@ const socialLabels: Record<string, string> = {
     {enableSmoothScroll && <SmoothScrollInit />}
     {enableAmbient && <AmbientInit />}
     {enableCursor && <CursorInit />}
+    {enablePageTransitions && <PageTransitionInit />}
   </body>
 </html>
