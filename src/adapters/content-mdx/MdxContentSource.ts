@@ -13,17 +13,11 @@ import type {
   PostSummary,
   PostDetail,
 } from "../../domain/models/view/PostView";
+import { canonicalizeTagArray, canonicalizeTag, tagLabel } from "../../domain/rules/tags";
 
 /** Strip file extension from Astro v5 entry ID to get a clean slug. */
 function toSlug(id: string): string {
   return id.replace(/\.[^.]+$/, "");
-}
-
-/** Derive a display label from a tag slug (basic title-case). */
-function tagSlugToLabel(slug: string): string {
-  return slug
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 /** Ensure a file path starts with `/` (CMS may omit the leading slash). Absolute URLs are returned as-is. */
@@ -48,7 +42,7 @@ export class MdxContentSource implements ContentSource {
         summary: e.data.summary,
         status: e.data.status,
         featured: e.data.featured,
-        tags: e.data.tags ?? [],
+        tags: canonicalizeTagArray(e.data.tags ?? []),
         primaryImage: firstImage
           ? { src: normalizeSrc(firstImage.src), alt: firstImage.alt }
           : undefined,
@@ -105,7 +99,7 @@ export class MdxContentSource implements ContentSource {
       summary: entry.data.summary,
       status: entry.data.status,
       featured: entry.data.featured,
-      tags: entry.data.tags ?? [],
+      tags: canonicalizeTagArray(entry.data.tags ?? []),
       primaryImage: firstImage
         ? { src: normalizeSrc(firstImage.src), alt: firstImage.alt }
         : undefined,
@@ -144,7 +138,7 @@ export class MdxContentSource implements ContentSource {
       title: e.data.title,
       slug: toSlug(e.id),
       excerpt: e.data.excerpt,
-      tags: e.data.tags ?? [],
+      tags: canonicalizeTagArray(e.data.tags ?? []),
       publishedAt: e.data.publishedAt,
       coverImage: e.data.coverImage ? normalizeSrc(e.data.coverImage) : undefined,
     }));
@@ -184,7 +178,7 @@ export class MdxContentSource implements ContentSource {
       title: entry.data.title,
       slug: toSlug(entry.id),
       excerpt: entry.data.excerpt,
-      tags: entry.data.tags ?? [],
+      tags: canonicalizeTagArray(entry.data.tags ?? []),
       publishedAt: entry.data.publishedAt,
       coverImage: entry.data.coverImage ? normalizeSrc(entry.data.coverImage) : undefined,
       content: {
@@ -208,24 +202,28 @@ export class MdxContentSource implements ContentSource {
     >();
 
     for (const p of projects) {
-      for (const tag of p.data.tags) {
-        const existing = map.get(tag) ?? { countProjects: 0, countPosts: 0 };
+      for (const rawTag of p.data.tags) {
+        const slug = canonicalizeTag(rawTag);
+        if (!slug) continue;
+        const existing = map.get(slug) ?? { countProjects: 0, countPosts: 0 };
         existing.countProjects++;
-        map.set(tag, existing);
+        map.set(slug, existing);
       }
     }
 
     for (const p of posts) {
-      for (const tag of p.data.tags) {
-        const existing = map.get(tag) ?? { countProjects: 0, countPosts: 0 };
+      for (const rawTag of p.data.tags) {
+        const slug = canonicalizeTag(rawTag);
+        if (!slug) continue;
+        const existing = map.get(slug) ?? { countProjects: 0, countPosts: 0 };
         existing.countPosts++;
-        map.set(tag, existing);
+        map.set(slug, existing);
       }
     }
 
     const tags: TagCounts[] = [...map.entries()].map(([slug, counts]) => ({
       slug,
-      label: tagSlugToLabel(slug),
+      label: tagLabel(slug),
       countProjects: counts.countProjects,
       countPosts: counts.countPosts,
       countTotal: counts.countProjects + counts.countPosts,

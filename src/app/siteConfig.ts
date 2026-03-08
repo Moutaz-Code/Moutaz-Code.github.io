@@ -23,6 +23,9 @@ export const siteConfig = {
     { label: "Contact", href: "/contact" },
     { label: "Resume", href: "/resume" },
   ],
+
+  /** When true, unknown tags cause a build warning via check:tags. */
+  strictTags: false,
 } as const;
 
 export type NavItem = (typeof siteConfig.navItems)[number];

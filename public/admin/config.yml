@@ -43,6 +43,7 @@ collections:
         widget: list
         required: false
         default: []
+        hint: "Suggested: astro, tailwind, typescript, react, dotnet, csharp, unity, shader, webgl, case-study. Case doesn't matter."
 
       - name: status
         label: Status
@@ -175,6 +176,7 @@ collections:
         widget: list
         required: false
         default: []
+        hint: "Suggested: astro, tailwind, typescript, react, dotnet, csharp, unity, shader, webgl, case-study. Case doesn't matter."
 
       - { name: publishedAt, label: Published Date, widget: datetime, required: false, date_format: "YYYY-MM-DD", time_format: false }
 

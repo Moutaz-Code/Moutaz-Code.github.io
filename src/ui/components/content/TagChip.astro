@@ -1,4 +1,6 @@
 ---
+import { tagLabel } from "../../../domain/rules/tags";
+
 interface Props {
   tag: string;
   href?: string;
@@ -8,9 +10,7 @@ interface Props {
 
 const { tag, href, size = "sm", interactive = true } = Astro.props;
 
-const label = tag
-  .replace(/-/g, " ")
-  .replace(/\b\w/g, (c) => c.toUpperCase());
+const label = tagLabel(tag);
 
 const sizeClasses = {
   sm: "px-2.5 py-0.5 text-xs",
