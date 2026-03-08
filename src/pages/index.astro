@@ -3,6 +3,8 @@ import { contentSource } from "../app/content";
 import BaseLayout from "../ui/layouts/BaseLayout.astro";
 import HeroSignature from "../ui/components/home/HeroSignature.astro";
 import HeroSignatureInit from "../ui/components/home/HeroSignatureInit.astro";
+import ProjectConstellation from "../ui/components/home/ProjectConstellation.astro";
+import ConstellationInit from "../ui/components/home/ConstellationInit.astro";
 import FeaturedProjects from "../ui/components/home/FeaturedProjects.astro";
 import SkillsStrip from "../ui/components/home/SkillsStrip.astro";
 import ExperienceSection from "../ui/components/home/ExperienceSection.astro";
@@ -12,14 +14,16 @@ import MagneticInit from "../ui/components/motion/MagneticInit.astro";
 import SectionDivider from "../ui/components/signature/SectionDivider.astro";
 import DividerInit from "../ui/components/signature/DividerInit.astro";
 
-const featuredProjects = await contentSource.listProjects({ featuredOnly: true, limit: 3 });
+const featuredProjects = await contentSource.listProjects({ featuredOnly: true, limit: 7 });
 const latestPosts = await contentSource.listPosts({ limit: 2 });
+const gridProjects = featuredProjects.slice(0, 3);
 ---
 
 <BaseLayout enableMotion enableSmoothScroll enableAmbient enableCursor enablePageTransitions>
   <HeroSignature />
+  <ProjectConstellation projects={featuredProjects} />
   <SectionDivider variant="wave" class="my-4" />
-  <FeaturedProjects projects={featuredProjects} />
+  <FeaturedProjects projects={gridProjects} />
   <SectionDivider variant="circuit" class="my-4" />
   <SkillsStrip />
   <SectionDivider variant="harmonic" class="my-4" />
@@ -29,4 +33,5 @@ const latestPosts = await contentSource.listPosts({ limit: 2 });
   <HeroSignatureInit />
   <MagneticInit />
   <DividerInit />
+  <ConstellationInit />
 </BaseLayout>

@@ -1,0 +1,36 @@
+---
+// ConstellationInit — IntersectionObserver-gated RAF loop for the
+// constellation animation. Dynamically imports the constellation module.
+// When the container scrolls out of view, the RAF loop pauses.
+// Include once per page (after ProjectConstellation DOM).
+---
+
+<script>
+  const root = document.querySelector<HTMLElement>(
+    "[data-constellation-root]",
+  );
+
+  if (root) {
+    import("../../motion/constellation").then(({ initConstellation }) => {
+      initConstellation(root);
+
+      const constellation = (root as any).__constellation;
+      if (!constellation) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              constellation.start();
+            } else {
+              constellation.stop();
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      observer.observe(root);
+    });
+  }
+</script>
