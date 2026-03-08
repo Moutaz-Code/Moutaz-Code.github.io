@@ -75,7 +75,7 @@ const socialLabels: Record<string, string> = {
     <script is:inline>
       (function(){
         var t = localStorage.getItem('theme');
-        var dark = t === 'dark' || (!t && matchMedia('(prefers-color-scheme:dark)').matches);
+        var dark = t !== 'light';
         if (dark) document.documentElement.classList.add('theme-dark');
       })();
     </script>

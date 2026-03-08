@@ -19,7 +19,7 @@ export function setStoredTheme(choice: ThemeChoice): void {
 /** Resolve to an effective "light" or "dark" value. */
 export function resolveTheme(choice: ThemeChoice): "light" | "dark" {
   if (choice !== "system") return choice;
-  if (typeof window === "undefined") return "light";
+  if (typeof window === "undefined") return "dark";
   return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
