@@ -1,18 +1,17 @@
 ---
 // AmbientInit — animates the ambient layer (pointer tracking, blob drift, parallax).
 // Include once after AmbientLayer to start the animation loop.
+// RAF pauses when tab is hidden. Scroll value is cached via passive listener.
 ---
 
 <script>
-  const reduced =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  import { prefersReducedMotion } from "../../runtime/prefs";
 
   const isTouch =
     typeof window !== "undefined" &&
     ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
-  if (!reduced) {
+  if (!prefersReducedMotion()) {
     // ── Pointer state ──────────────────────────────────
     let pointerX = 0; // normalised -1 … 1
     let pointerY = 0;
@@ -26,6 +25,12 @@
         pointerY = (e.clientY / window.innerHeight) * 2 - 1;
       });
     }
+
+    // ── Cached scroll value (passive listener) ───────
+    let cachedScrollY = window.scrollY;
+    window.addEventListener("scroll", () => {
+      cachedScrollY = window.scrollY;
+    }, { passive: true });
 
     // ── Elements ───────────────────────────────────────
     const blobs = document.querySelectorAll<HTMLElement>(".ambient-blob");
@@ -42,6 +47,9 @@
 
     // ── Animation loop ─────────────────────────────────
     let start = 0;
+    let rafId: number | null = null;
+    let running = false;
+
     function tick(now: number) {
       if (!start) start = now;
       const t = (now - start) / 1000; // seconds
@@ -61,19 +69,42 @@
       });
 
       // Parallax shapes: scroll + pointer offset
-      const scrollY = window.scrollY;
       shapes.forEach((shape) => {
         const depth = parseFloat(
           shape.getAttribute("data-parallax-depth") ?? "0.02",
         );
         const sx = smoothX * 40 * depth * 10; // subtle pointer parallax
-        const sy = -scrollY * depth + smoothY * 30 * depth * 10;
+        const sy = -cachedScrollY * depth + smoothY * 30 * depth * 10;
         shape.style.transform = `translate(${sx}px, ${sy}px)`;
       });
 
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
     }
 
-    requestAnimationFrame(tick);
+    function startLoop() {
+      if (running) return;
+      running = true;
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stopLoop() {
+      if (!running) return;
+      running = false;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    // ── Visibility pause ─────────────────────────────
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopLoop();
+      } else {
+        startLoop();
+      }
+    });
+
+    startLoop();
   }
 </script>

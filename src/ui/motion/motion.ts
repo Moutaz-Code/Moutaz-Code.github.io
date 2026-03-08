@@ -1,4 +1,5 @@
 import { animate, inView } from "motion";
+import { prefersReducedMotion } from "../runtime/prefs";
 
 // ── Tokens ──────────────────────────────────────────────
 
@@ -7,7 +8,7 @@ const EASE = [0.22, 1, 0.36, 1] as const; // cubic-bezier — smooth deceleratio
 const REVEAL_Y = 14; // px
 const STAGGER_GAP = 0.055; // s between siblings
 
-const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduced = prefersReducedMotion();
 
 // ── Reveals ─────────────────────────────────────────────
 

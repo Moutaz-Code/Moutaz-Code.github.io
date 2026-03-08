@@ -1,5 +1,6 @@
 import { createTimeline } from "animejs/timeline";
 import { createDrawable } from "animejs/svg";
+import { prefersReducedMotion } from "../runtime/prefs";
 
 /**
  * Initialises the hero signature animation timeline.
@@ -9,7 +10,7 @@ import { createDrawable } from "animejs/svg";
  */
 export function initHeroSignature(root: HTMLElement): void {
   // ── Guard: reduced motion ──────────────────────────
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (prefersReducedMotion()) return;
 
   // ── Guard: already ran this session ────────────────
   const SESSION_KEY = "heroSignatureRan";

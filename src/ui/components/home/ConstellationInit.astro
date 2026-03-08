@@ -1,7 +1,7 @@
 ---
 // ConstellationInit — IntersectionObserver-gated RAF loop for the
 // constellation animation. Dynamically imports the constellation module.
-// When the container scrolls out of view, the RAF loop pauses.
+// When the container scrolls out of view or the tab is hidden, the RAF loop pauses.
 // Include once per page (after ProjectConstellation DOM).
 ---
 
@@ -17,10 +17,13 @@
       const constellation = (root as any).__constellation;
       if (!constellation) return;
 
+      let isIntersecting = false;
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
+            isIntersecting = entry.isIntersecting;
+            if (isIntersecting && !document.hidden) {
               constellation.start();
             } else {
               constellation.stop();
@@ -31,6 +34,15 @@
       );
 
       observer.observe(root);
+
+      // Pause when tab is hidden, even if in viewport
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          constellation.stop();
+        } else if (isIntersecting) {
+          constellation.start();
+        }
+      });
     });
   }
 </script>

@@ -1,10 +1,30 @@
 import Lenis from "lenis";
+import { prefersReducedMotion } from "../runtime/prefs";
 
 let lenis: Lenis | null = null;
+let rafId: number | null = null;
+let running = false;
 
-const reduced =
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduced = prefersReducedMotion();
+
+function startLoop() {
+  if (running || !lenis) return;
+  running = true;
+  function raf(time: number) {
+    lenis!.raf(time);
+    rafId = requestAnimationFrame(raf);
+  }
+  rafId = requestAnimationFrame(raf);
+}
+
+function stopLoop() {
+  if (!running) return;
+  running = false;
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+}
 
 export function initLenis(): void {
   if (reduced) return;
@@ -15,11 +35,16 @@ export function initLenis(): void {
     smoothWheel: true,
   });
 
-  function raf(time: number) {
-    lenis!.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
+  // Pause when tab is hidden
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopLoop();
+    } else {
+      startLoop();
+    }
+  });
+
+  startLoop();
 
   // Intercept anchor-link clicks so Lenis handles the scroll
   document.addEventListener("click", (e) => {
@@ -45,6 +70,7 @@ export function initLenis(): void {
 
 export function destroyLenis(): void {
   if (lenis) {
+    stopLoop();
     lenis.destroy();
     lenis = null;
   }

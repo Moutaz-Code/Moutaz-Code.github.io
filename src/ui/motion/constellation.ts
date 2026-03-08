@@ -4,6 +4,8 @@
 // Respects prefers-reduced-motion and coarse pointer (touch).
 // Exposes start()/stop() on root element for IntersectionObserver control.
 
+import { prefersReducedMotion, isCoarsePointer } from "../runtime/prefs";
+
 interface ConstellationNodeData {
   slug: string;
   baseX: number;
@@ -50,10 +52,8 @@ const WAVE_FREQ = 0.8;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function initConstellation(root: HTMLElement): () => void {
-  const reduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-  const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+  const reduced = prefersReducedMotion();
+  const isCoarse = isCoarsePointer();
 
   // Read data from embedded JSON
   const dataScript = root.querySelector<HTMLScriptElement>(
