@@ -126,6 +126,7 @@ export class MdxContentSource implements ContentSource {
       challenges: entry.data.challenges ?? [],
       lessons: entry.data.lessons ?? [],
       nextSteps: entry.data.nextSteps ?? [],
+      githubRepo: entry.data.githubRepo,
     };
   }
 

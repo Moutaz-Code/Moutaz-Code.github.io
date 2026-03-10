@@ -26,3 +26,6 @@ pnpm-debug.log*
 # claude code temp files
 tmpclaude-*
 NUL
+
+# GitHub repo metadata cache
+.cache/

@@ -278,6 +278,8 @@ collections:
         required: false
         default: []
 
+      - { name: githubRepo, label: "GitHub Repo", widget: string, required: false, hint: "Format: owner/repo (e.g. Moutaz-Code/my-project)" }
+
       - { name: body, label: Body, widget: markdown }
 
   - name: posts

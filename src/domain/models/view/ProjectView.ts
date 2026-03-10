@@ -31,4 +31,5 @@ export type ProjectDetail = ProjectSummary & {
   challenges: string[];
   lessons: string[];
   nextSteps: string[];
+  githubRepo?: string;
 };

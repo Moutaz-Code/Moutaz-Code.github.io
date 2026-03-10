@@ -43,6 +43,9 @@ const projects = defineCollection({
       challenges: z.array(z.string()).default([]),
       lessons: z.array(z.string()).default([]),
       nextSteps: z.array(z.string()).default([]),
+
+      // GitHub integration (optional — format: "owner/repo")
+      githubRepo: z.string().min(3).optional(),
     })
     .refine(
       (d) => !(d.dateStart && d.dateEnd) || d.dateEnd >= d.dateStart,
