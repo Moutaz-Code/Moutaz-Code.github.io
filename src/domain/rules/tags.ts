@@ -6,8 +6,15 @@ export function normalizeTagInput(raw: string): string {
   return slugify(raw);
 }
 
-/** Canonicalize a raw tag: normalize → resolve alias → return canonical slug. */
+/** Canonicalize a raw tag: resolve alias → normalize → return canonical slug.
+ *  Checks raw lowercase first (to handle labels with special chars like "C#", ".NET"),
+ *  then falls back to slugified form. */
 export function canonicalizeTag(raw: string): string {
+  const lower = raw.toLowerCase().trim();
+  // Try raw lowercase first (catches aliases like "c#", ".net", "c++")
+  const fromRaw = ALIAS_TO_SLUG.get(lower);
+  if (fromRaw) return fromRaw;
+  // Fall back to slugified form
   const slug = normalizeTagInput(raw);
   return ALIAS_TO_SLUG.get(slug) ?? slug;
 }
