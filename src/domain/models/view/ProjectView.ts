@@ -32,4 +32,5 @@ export type ProjectDetail = ProjectSummary & {
   lessons: string[];
   nextSteps: string[];
   githubRepo?: string;
+  itchEmbedUrl?: string;
 };

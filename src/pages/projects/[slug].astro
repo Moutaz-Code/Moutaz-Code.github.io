@@ -15,6 +15,7 @@ import QuickFacts from "../../ui/components/projects/QuickFacts.astro";
 import Highlights from "../../ui/components/projects/Highlights.astro";
 import Results from "../../ui/components/projects/Results.astro";
 import RepoCard from "../../ui/components/integrations/RepoCard.astro";
+import ItchEmbed from "../../ui/components/integrations/ItchEmbed.astro";
 
 export async function getStaticPaths() {
   const projects = await contentSource.listProjects();
@@ -31,7 +32,7 @@ const {
   title, summary, status, tags, links, media, content, dateStart, dateEnd,
   role, timeframe, stack, highlights, results,
   problem, constraints, approach, architecture, challenges, lessons, nextSteps,
-  githubRepo,
+  githubRepo, itchEmbedUrl,
 } = project;
 
 const repo = githubRepo ? await repoService.getRepo(githubRepo) : null;
@@ -148,6 +149,9 @@ const caseSections = [
         </p>
       ) : null
     }
+
+    <!-- itch.io embed -->
+    {itchEmbedUrl && <ItchEmbed src={itchEmbedUrl} title={`${title} on itch.io`} />}
 
     <!-- Case study sections -->
     {

@@ -46,6 +46,9 @@ const projects = defineCollection({
 
       // GitHub integration (optional — format: "owner/repo")
       githubRepo: z.string().min(3).optional(),
+
+      // itch.io embed (optional — full iframe src URL)
+      itchEmbedUrl: z.string().url().optional(),
     })
     .refine(
       (d) => !(d.dateStart && d.dateEnd) || d.dateEnd >= d.dateStart,
