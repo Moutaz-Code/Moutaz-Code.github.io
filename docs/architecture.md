@@ -512,3 +512,371 @@ https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,c_limit,w_800/v1234/p
 - Local `/uploads/...` paths continue to work unchanged (LocalMediaService)
 - External non-Cloudinary URLs pass through unchanged
 - No new binary assets committed to the repo for Cloudinary content
+
+## Phase 10: Motion, sound & signature animations
+
+Phase 10 transformed the portfolio from a static content site into an interactive, motion-rich experience while maintaining strict performance discipline.
+
+### BaseLayout feature toggles
+
+All features are opt-in per page via BaseLayout props:
+
+```typescript
+interface Props {
+  enableMotion?: boolean;           // initReveals, initHovers, initAccent
+  enableSmoothScroll?: boolean;     // Lenis inertial scrolling
+  enableAmbient?: boolean;          // Ambient background layer
+  ambientVariant?: "a" | "b" | "c"; // Per-page visual variation
+  enableCursor?: boolean;           // Custom cursor tracker
+  enablePageTransitions?: boolean;  // Fade in/out navigation
+  enableSound?: boolean;            // Web Audio micro-sounds
+}
+```
+
+### Dependencies added
+
+| Package | Purpose |
+|---|---|
+| `motion` | Lightweight animation library (Framer Motion successor, ~15KB) |
+| `animejs` | SVG stroke/path animation (signatures, dividers) |
+| `lenis` | Inertial smooth scrolling |
+
+### Component inventory
+
+```
+src/ui/components/
+  signature/
+    HeroSignature.astro       # Animated SVG underline + bloom glow behind CTAs
+    HeroSignatureInit.astro   # Initialization for hero signature animation
+    SignatureInit.astro       # Entry point for anime.js signature animations
+    SignatureUnderline.astro  # Reusable underline component
+    CornerFlourish.astro      # Decorative L-shaped corner bracket (animated on scroll)
+    CornerSpark.astro         # Subtle corner accent (paired with MagneticInit)
+    SectionDivider.astro      # Animated SVG divider (wave / circuit / harmonic variants)
+    DividerInit.astro         # IntersectionObserver-gated divider animation
+  motion/
+    MagneticInit.astro        # Lazy-loads pointer-tracking magnetic hover effects
+  ambient/
+    AmbientLayer.astro        # Decorative background (gradient blobs, parallax shapes, grain)
+    AmbientInit.astro         # Blob drift, pointer tracking, scroll parallax controller
+  cursor/
+    CursorLayer.astro         # Pure DOM presentation (dot, ring, label elements)
+    CursorInit.astro          # Interactive cursor controller with state machine
+  transitions/
+    PageTransitionInit.astro  # Fade in/out on internal navigation
+  home/
+    ProjectConstellation.astro # Interactive node network for project discovery
+    ConstellationInit.astro    # IntersectionObserver-gated constellation animation
+  (root level)
+    MotionInit.astro          # Driver that initializes reveals, hovers, accent animations
+    SmoothScrollInit.astro    # Lenis smooth scrolling initialization
+    SoundToggle.astro         # Speaker icon toggle button in header
+    SoundInit.astro           # Event listener for micro-sounds on [data-sfx] elements
+    ThemeToggle.astro         # Animated sun/moon pill switch in header
+```
+
+### Runtime modules
+
+| Module | Location | Purpose |
+|---|---|---|
+| `motion.ts` | `src/ui/motion/` | Scroll-triggered reveals (`data-reveal`), hover lifts (`data-hover="lift"`), accent animations (pop/glow/wiggle) |
+| `magnetic.ts` | `src/ui/motion/` | Pointer-tracking magnetic repulsion (max 6px, lerp smoothing) |
+| `constellation.ts` | `src/ui/motion/` | Node drift, pointer repulsion, curved SVG edge animation |
+| `signature.ts` | `src/ui/anime/` | anime.js stroke draw for underlines, corners |
+| `heroSignature.ts` | `src/ui/anime/` | Hero-specific signature animation |
+| `lenis.ts` | `src/ui/scroll/` | Lenis init (lerp 0.08), anchor-link interception, header offset |
+| `prefs.ts` | `src/ui/runtime/` | Cached `prefersReducedMotion()` and `isCoarsePointer()` checks |
+| `sound.ts` | `src/app/` | Web Audio synthesis (toggle: 1200→800Hz sine sweep; click: 800Hz triangle), localStorage persistence |
+| `theme.ts` | `src/app/` | Theme persistence (light/dark/system), `theme-dark` class toggle |
+
+### CSS files
+
+| File | Purpose |
+|---|---|
+| `src/styles/anime-signature.css` | SVG stroke animation styles |
+| `src/styles/constellation.css` | Node/line styling |
+| `src/styles/cursor.css` | Custom cursor DOM presentation |
+| `src/styles/ambient.css` | Blob/parallax styling |
+| `src/styles/transitions.css` | Page fade in/out keyframes |
+| `src/styles/theme.css` | Dark/light theme variables |
+
+### Custom cursor state machine
+
+The cursor controller detects context by walking the DOM tree:
+
+| State | Trigger |
+|---|---|
+| `default` | Normal |
+| `link` | Over `<a>` tags |
+| `button` | Over `<button>` or `[role="button"]` |
+| `text` | Over inputs/textareas/contenteditable |
+| `card` | Over `[data-hover="lift"]` elements |
+
+Custom labels via `data-cursor-label` attribute. Dot lerp: 0.55 (snappy), ring lerp: 0.15 (laggy).
+
+### Project constellation
+
+Interactive node network on the homepage for project discovery:
+
+- Deterministic hash-based layout with relaxation algorithm
+- Nearest-neighbor edges (Delaunay-like connectivity)
+- Drift animation with sin/cos floating per node
+- Pointer repulsion: max 12px, radius 250px (disabled on touch)
+- Curved SVG lines with wave modulation (amplitude 32px, freq 0.8)
+- Tooltips with title and up to 3 tags
+
+### Section divider variants
+
+| Variant | Description |
+|---|---|
+| `wave` | Organic sine curves |
+| `circuit` | Digital signal pulses |
+| `harmonic` | Complex composite waveform (19 harmonics) |
+
+### Performance infrastructure
+
+**`scripts/check-perf-rules.mjs`** — import discipline enforcement:
+- `animejs` only importable from `src/ui/anime/`
+- `constellation` only in home components and `src/ui/motion/`
+- `lenis` only in `src/ui/scroll/` and SmoothScrollInit
+
+**`scripts/check-coupling.mjs`** — ports/adapters boundary enforcement:
+- `astro:content` only importable from `src/content/config.ts` and `src/adapters/content-mdx/MdxContentSource.ts`
+
+**`docs/perf.md`** — performance audit documentation.
+
+### Key architectural decisions
+
+1. **Lazy loading** — all animation modules dynamically imported, only loaded when needed
+2. **RAF management** — loops start on first interaction, pause on tab hidden / out of viewport
+3. **Graceful degradation** — all features hidden/disabled with CSS when JS unavailable
+4. **User agency** — respects `prefers-reduced-motion`, `prefers-color-scheme`, coarse pointer detection
+5. **Sound safety** — AudioContext lazy-initialized, disabled by toggle, user opt-in via localStorage
+6. **Visibility-aware** — all animation systems pause when tab hidden or element scrolled out of viewport
+
+## Phase 11: Case study project detail
+
+Added structured case study fields and dedicated components for rich project narratives.
+
+### Case study frontmatter fields
+
+All fields are optional with safe defaults (backward compatible):
+
+| Field | Type | Purpose |
+|---|---|---|
+| `role` | `string?` | User's role (e.g. "Solo Developer") |
+| `timeframe` | `string?` | Project duration (e.g. "Oct 2025 – Jan 2026") |
+| `stack` | `string[]` | Technologies used (separate from tags) |
+| `highlights` | `string[]` | 3–6 key bullet points |
+| `results` | `string[]` | Measurable outcomes |
+| `problem` | `string?` | Problem statement |
+| `constraints` | `string[]` | Project constraints |
+| `approach` | `string[]` | Methodology steps |
+| `architecture` | `string[]` | Architecture decisions |
+| `challenges` | `string[]` | Technical challenges faced |
+| `lessons` | `string[]` | Lessons learned |
+| `nextSteps` | `string[]` | Future directions |
+
+Added to: `src/content/config.ts` (Zod), `src/domain/models/view/ProjectView.ts` (ProjectDetail type), `src/adapters/content-mdx/MdxContentSource.ts` (adapter passthrough with `?? []` fallback), `public/admin/config.yml` (CMS fields with hints).
+
+### Components created
+
+```
+src/ui/components/projects/
+  QuickFacts.astro    # Sticky sidebar card: status, role, timeframe, stack, links
+  Highlights.astro    # Key highlights with accent dot indicators
+  Results.astro       # Measurable outcomes with left accent border
+```
+
+### Project detail page layout
+
+`src/pages/projects/[slug].astro` refactored with:
+
+1. **Two-column grid** — `lg:grid-cols-[1fr_260px]` with 8px gap
+   - Left: Highlights + Results
+   - Right: QuickFacts (sticky at lg+ with `lg:sticky lg:top-24`)
+2. **Case study sections** — 7 sections (Problem, Constraints, Approach, Architecture, Challenges, Lessons, Next Steps) rendered as bullet lists or paragraphs, conditionally hidden when empty
+3. **Related projects** — up to 3 projects sharing at least one tag
+
+### Template documentation
+
+`docs/templates/project-case-study.mdx` — comprehensive template demonstrating all case study fields with realistic example values.
+
+## Phase 12: Content hardening & CMS flexibility
+
+Made content schemas more forgiving for CMS-authored content.
+
+### Post schema changes
+
+- `publishedAt` made optional (was required) — posts without dates sort last
+- `coverImage` made optional (was required)
+- Sorting handles missing dates: `a.publishedAt ? a.publishedAt.getTime() : 0`
+
+### CMS flexibility
+
+- All optional list/select fields in `public/admin/config.yml` marked `required: false`
+- Allows quick entry of minimal projects/posts without filling every field
+- Validation still enforced at the Zod schema level
+
+### Files modified
+
+- `src/content/config.ts` — optional post fields
+- `src/domain/models/Post.ts`, `src/domain/models/view/PostView.ts` — `publishedAt?: Date`
+- `src/adapters/content-mdx/MdxContentSource.ts` — null-safe date sorting
+- `public/admin/config.yml` — `required: false` on 14 fields across both collections
+- Blog pages and post components updated for graceful missing-date handling
+
+## Phase 14: Tag taxonomy enforcement + CMS ergonomics
+
+### Tag registry
+
+`src/app/tagsRegistry.ts` — canonical registry of 120+ tags across 13 categories:
+
+| Category | Example tags |
+|---|---|
+| General | projects, portfolio, case-study, writing, tutorial, notes |
+| University | university, coursework, capstone |
+| Research | research, experiments, paper-review |
+| Languages | C, C++, C#, Java, Python, Rust, Go, TypeScript, JavaScript, SQL |
+| Web Development | React, Next.js, Vue, Svelte, Astro, Node.js, Express, HTML, CSS |
+| .NET Ecosystem | .NET, ASP.NET, WPF, WinUI, XAML, Entity Framework |
+| Game Dev | Unity, Unreal, gameplay, tools-dev, technical-art, VFX |
+| Graphics & Rendering | shaders, WebGL, OpenGL, DirectX, Vulkan, Metal, PBR, NPR, ray-tracing |
+| Security | cybersecurity, forensics, incident-response, crypto, appsec |
+| AI/ML | AI, ML, deep-learning, NLP, computer-vision, LLM |
+| DevOps / IT | databases, Linux, Windows, networking |
+| Tools | Git, GitHub, Vercel, Docker, CI/CD |
+| Design | UI/UX, Figma, Blender, Photoshop, pixel-art |
+
+Each tag has: `slug` (canonical kebab-case), `label` (display name), `aliases[]` (alternative names), `category` (organizational grouping).
+
+### Tag canonicalization
+
+`src/domain/rules/tags.ts`:
+
+```typescript
+canonicalizeTag("C#")    → "csharp"   // raw lowercase "c#" found in ALIAS_TO_SLUG
+canonicalizeTag(".NET")  → "dotnet"   // before slugify strips special chars
+canonicalizeTag("react") → "react"    // direct slug match
+```
+
+The function checks raw lowercase input against `ALIAS_TO_SLUG` *before* slugifying, because `slugify()` strips characters like `#`, `.`, `+`.
+
+### Build-time tag checker
+
+`scripts/check-tags.mjs` — scans all MDX frontmatter for tags not in the registry. Reports warnings but doesn't fail the build. Added to `package.json` as `check:tags` and chained into the `check` script.
+
+### CMS tag widget upgrade
+
+Both project and post tag fields changed from `widget: list` (free-text) to `widget: select` with `multiple: true` and all 120+ tags as categorized dropdown options. Users can search and multi-select without typing.
+
+### Adapter integration
+
+- `MdxContentSource.getPostBySlug()` — tags use `canonicalizeTagArray()`
+- `MdxContentSource.listTags()` — canonicalizes during aggregation, uses `tagLabel()` for display
+- `TagChip.astro` — uses `tagLabel()` from domain rules
+
+### Site config
+
+`src/app/siteConfig.ts` — added `strictTags: false` (allows unknown tags at build time).
+
+## Phase 15A: GitHub repo cards (build-time, cached)
+
+### Architecture
+
+Follows the same ports & adapters pattern as content:
+
+```
+Page → repoService (from src/app/repos.ts) → GitHubRepoMetadataService → GitHub API
+```
+
+### Port
+
+`src/domain/ports/RepoMetadataService.ts`:
+
+```typescript
+type RepoMetadata = {
+  fullName: string;     // "owner/repo"
+  url: string;          // GitHub repo URL
+  description?: string;
+  stars: number;
+  forks: number;
+  language?: string;
+  updatedAt: string;
+  homepage?: string;
+};
+
+interface RepoMetadataService {
+  getRepo(fullName: string): Promise<RepoMetadata | null>;
+}
+```
+
+### Adapter
+
+`src/adapters/github/GitHubRepoMetadataService.ts`:
+
+- Fetches from GitHub API v3 (`https://api.github.com/repos/{owner}/{repo}`)
+- File-based cache at `.cache/github-repos.json` with 12-hour TTL
+- Optional `GITHUB_TOKEN` env var for authenticated requests
+- On fetch failure: returns stale cache entry or `null` — never throws, never breaks the build
+
+### Composition root
+
+`src/app/repos.ts` — exports `repoService` singleton.
+
+### Schema + model
+
+- `src/content/config.ts` — `githubRepo` field uses `z.preprocess()` to convert empty CMS strings to `undefined`, then `z.string().optional()`
+- `src/domain/models/view/ProjectView.ts` — `githubRepo?: string` on `ProjectDetail`
+- `src/adapters/content-mdx/MdxContentSource.ts` — passes `githubRepo` through
+
+### UI component
+
+`src/ui/components/integrations/RepoCard.astro`:
+
+- GitHub icon + repo name link
+- Description (if available)
+- Stats row: stars, forks, language, last updated date
+- Action buttons: "View on GitHub", "Homepage"
+- Styled with rounded-lg border, consistent with QuickFacts
+
+### Page wiring
+
+`src/pages/projects/[slug].astro`:
+
+- Fetches repo metadata at build time when `githubRepo` exists
+- Renders `RepoCard` between media gallery and case study sections
+- Falls back to a simple "View on GitHub →" link if the API fetch fails
+
+### CMS + gitignore
+
+- `public/admin/config.yml` — `githubRepo` string field (optional, hint: "owner/repo format")
+- `.gitignore` — added `.cache/` directory
+
+## Phase 15B: itch.io embed (responsive wrapper, per-project)
+
+### Schema + model
+
+- `src/content/config.ts` — `itchEmbedUrl` field uses `z.preprocess()` (empty string → undefined), then `z.string().url().optional()`
+- `src/domain/models/view/ProjectView.ts` — `itchEmbedUrl?: string` on `ProjectDetail`
+- `src/adapters/content-mdx/MdxContentSource.ts` — passes `itchEmbedUrl` through
+
+### UI component
+
+`src/ui/components/integrations/ItchEmbed.astro`:
+
+- Gamepad icon + "Play / Demo" label
+- Responsive iframe wrapper (max-width 552px, itch.io default)
+- `loading="lazy"` for performance
+- Accepts `src` (required) and `title` (optional, defaults to "itch.io widget")
+- Styled with rounded-lg border, consistent with RepoCard
+
+### Page wiring
+
+`src/pages/projects/[slug].astro`:
+
+- Renders `ItchEmbed` between GitHub repo card and case study sections when `itchEmbedUrl` exists
+
+### CMS
+
+- `public/admin/config.yml` — `itchEmbedUrl` string field (optional, hint: "Full iframe src URL from itch.io")
