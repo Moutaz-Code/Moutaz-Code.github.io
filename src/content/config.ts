@@ -45,10 +45,16 @@ const projects = defineCollection({
       nextSteps: z.array(z.string()).default([]),
 
       // GitHub integration (optional — format: "owner/repo")
-      githubRepo: z.string().min(3).optional(),
+      githubRepo: z.preprocess(
+        (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+        z.string().optional(),
+      ),
 
       // itch.io embed (optional — full iframe src URL)
-      itchEmbedUrl: z.string().url().optional(),
+      itchEmbedUrl: z.preprocess(
+        (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+        z.string().url().optional(),
+      ),
     })
     .refine(
       (d) => !(d.dateStart && d.dateEnd) || d.dateEnd >= d.dateStart,
