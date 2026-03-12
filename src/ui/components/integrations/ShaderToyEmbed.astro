@@ -5,26 +5,37 @@ interface Props {
 }
 
 const { shaderId, title = "ShaderToy shader" } = Astro.props;
-const embedUrl = `https://www.shadertoy.com/embed/${shaderId}?gui=false&t=10&paused=false&muted=true`;
+const viewUrl = `https://www.shadertoy.com/view/${shaderId}`;
+const thumbnailUrl = `https://www.shadertoy.com/media/shaders/${shaderId}.jpg`;
 ---
 
-<div class="rounded-lg border border-(--color-border) p-5 mb-8" data-reveal>
-  <div class="flex items-center gap-2 mb-3">
-    {/* Shader / sparkle icon */}
-    <svg class="w-5 h-5 text-(--color-text-muted) shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-    <span class="font-semibold text-sm">ShaderToy Demo</span>
-  </div>
-
-  <div class="relative w-full" style="aspect-ratio: 16 / 9;">
-    <iframe
-      src={embedUrl}
-      title={title}
-      frameborder="0"
+<div class="rounded-lg border border-(--color-border) overflow-hidden mb-8" data-reveal>
+  {/* Thumbnail image */}
+  <a href={viewUrl} target="_blank" rel="noopener noreferrer" class="block w-full">
+    <img
+      src={thumbnailUrl}
+      alt={title}
       loading="lazy"
-      allowfullscreen
-      class="absolute inset-0 w-full h-full border-0 rounded"
-    ></iframe>
+      class="w-full h-auto object-cover hover:opacity-80 transition-opacity"
+    />
+  </a>
+
+  {/* Footer with icon and link */}
+  <div class="p-4 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-2">
+      {/* Shader / sparkle icon */}
+      <svg class="w-4 h-4 text-(--color-text-muted) shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+      <span class="text-sm font-medium">ShaderToy</span>
+    </div>
+    <a
+      href={viewUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-xs text-(--color-accent) hover:text-(--color-accent-dark) no-underline font-medium"
+    >
+      View &rarr;
+    </a>
   </div>
 </div>
