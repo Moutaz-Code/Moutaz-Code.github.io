@@ -280,6 +280,7 @@ collections:
 
       - { name: githubRepo, label: "GitHub Repo", widget: string, required: false, hint: "Format: owner/repo (e.g. Moutaz-Code/my-project)" }
       - { name: itchEmbedUrl, label: "itch.io Embed URL", widget: string, required: false, hint: "Full iframe src URL from itch.io (e.g. https://itch.io/embed/12345)" }
+      - { name: shaderToyId, label: "ShaderToy ID", widget: string, required: false, hint: "Shader ID from ShaderToy (e.g. XsXXDn from shadertoy.com/view/XsXXDn)" }
 
       - { name: body, label: Body, widget: markdown }
 

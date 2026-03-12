@@ -880,3 +880,43 @@ interface RepoMetadataService {
 ### CMS
 
 - `public/admin/config.yml` — `itchEmbedUrl` string field (optional, hint: "Full iframe src URL from itch.io")
+
+## Phase 15C: ShaderToy embed (responsive wrapper, per-project)
+
+### Schema + model
+
+- `src/content/config.ts` — `shaderToyId` field uses `z.preprocess()` (empty string → undefined), then `z.string().min(1).optional()`
+- `src/domain/models/view/ProjectView.ts` — `shaderToyId?: string` on `ProjectDetail`
+- `src/adapters/content-mdx/MdxContentSource.ts` — passes `shaderToyId` through
+
+### UI component
+
+`src/ui/components/integrations/ShaderToyEmbed.astro`:
+
+- Sparkle/star icon + "ShaderToy Demo" label
+- Builds iframe URL from shader ID: `https://www.shadertoy.com/embed/{id}?gui=false&t=10&paused=false&muted=true`
+- Responsive 16:9 aspect-ratio wrapper (fills container width)
+- `loading="lazy"`, `allowfullscreen`
+- Styled with rounded-lg border, consistent with RepoCard and ItchEmbed
+
+### Page wiring
+
+`src/pages/projects/[slug].astro`:
+
+- Renders `ShaderToyEmbed` between itch.io embed and case study sections when `shaderToyId` exists
+
+### CMS
+
+- `public/admin/config.yml` — `shaderToyId` string field (optional, hint: "Shader ID from ShaderToy")
+
+### Integration render order on project detail page
+
+```
+Quick Facts + Highlights/Results
+Media Gallery
+GitHub RepoCard
+itch.io ItchEmbed
+ShaderToy ShaderToyEmbed
+Case study sections
+MDX body
+```

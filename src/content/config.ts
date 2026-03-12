@@ -55,6 +55,12 @@ const projects = defineCollection({
         (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
         z.string().url().optional(),
       ),
+
+      // ShaderToy embed (optional — just the shader ID)
+      shaderToyId: z.preprocess(
+        (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+        z.string().min(1).optional(),
+      ),
     })
     .refine(
       (d) => !(d.dateStart && d.dateEnd) || d.dateEnd >= d.dateStart,

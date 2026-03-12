@@ -33,4 +33,5 @@ export type ProjectDetail = ProjectSummary & {
   nextSteps: string[];
   githubRepo?: string;
   itchEmbedUrl?: string;
+  shaderToyId?: string;
 };
