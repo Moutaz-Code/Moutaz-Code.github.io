@@ -89,6 +89,9 @@ export class MdxContentSource implements ContentSource {
     if (!entry) return null;
 
     const rendered = await entry.render();
+    const quickFacts = entry.data.quickFacts ?? {};
+    const caseStudy = entry.data.caseStudy ?? {};
+    const integrations = entry.data.integrations ?? {};
     const firstImage = entry.data.media.find(
       (m) => m.type === "image" || m.type === "gif",
     );
@@ -114,21 +117,21 @@ export class MdxContentSource implements ContentSource {
         Content: rendered.Content,
         headings: rendered.headings,
       },
-      role: entry.data.role,
-      timeframe: entry.data.timeframe,
-      stack: entry.data.stack ?? [],
-      highlights: entry.data.highlights ?? [],
-      results: entry.data.results ?? [],
-      problem: entry.data.problem,
-      constraints: entry.data.constraints ?? [],
-      approach: entry.data.approach ?? [],
-      architecture: entry.data.architecture ?? [],
-      challenges: entry.data.challenges ?? [],
-      lessons: entry.data.lessons ?? [],
-      nextSteps: entry.data.nextSteps ?? [],
-      githubRepo: entry.data.githubRepo,
-      itchEmbedUrl: entry.data.itchEmbedUrl,
-      shaderToyId: entry.data.shaderToyId,
+      role: quickFacts.role ?? entry.data.role,
+      timeframe: quickFacts.timeframe ?? entry.data.timeframe,
+      stack: quickFacts.stack ?? entry.data.stack ?? [],
+      highlights: caseStudy.highlights ?? entry.data.highlights ?? [],
+      results: caseStudy.results ?? entry.data.results ?? [],
+      problem: caseStudy.problem ?? entry.data.problem,
+      constraints: caseStudy.constraints ?? entry.data.constraints ?? [],
+      approach: caseStudy.approach ?? entry.data.approach ?? [],
+      architecture: caseStudy.architecture ?? entry.data.architecture ?? [],
+      challenges: caseStudy.challenges ?? entry.data.challenges ?? [],
+      lessons: caseStudy.lessons ?? entry.data.lessons ?? [],
+      nextSteps: caseStudy.nextSteps ?? entry.data.nextSteps ?? [],
+      githubRepo: integrations.githubRepo ?? entry.data.githubRepo,
+      itchEmbedUrl: integrations.itchEmbedUrl ?? entry.data.itchEmbedUrl,
+      shaderToyId: integrations.shaderToyId ?? entry.data.shaderToyId,
     };
   }
 

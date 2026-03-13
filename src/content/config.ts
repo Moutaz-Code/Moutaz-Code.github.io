@@ -12,6 +12,39 @@ const mediaSchema = z.object({
   caption: z.string().optional(),
 });
 
+const quickFactsSchema = z.object({
+  role: z.string().optional(),
+  timeframe: z.string().optional(),
+  stack: z.array(z.string()).default([]),
+}).default({});
+
+const caseStudySchema = z.object({
+  highlights: z.array(z.string()).default([]),
+  results: z.array(z.string()).default([]),
+  problem: z.string().optional(),
+  constraints: z.array(z.string()).default([]),
+  approach: z.array(z.string()).default([]),
+  architecture: z.array(z.string()).default([]),
+  challenges: z.array(z.string()).default([]),
+  lessons: z.array(z.string()).default([]),
+  nextSteps: z.array(z.string()).default([]),
+}).default({});
+
+const integrationsSchema = z.object({
+  githubRepo: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().optional(),
+  ),
+  itchEmbedUrl: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().url().optional(),
+  ),
+  shaderToyId: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().min(1).optional(),
+  ),
+}).default({});
+
 const projects = defineCollection({
   type: "content",
   schema: z
@@ -30,7 +63,12 @@ const projects = defineCollection({
       links: z.array(linkSchema).default([]),
       media: z.array(mediaSchema).default([]),
 
-      // Case study fields (all optional — backward compatible)
+      // Grouped CMS objects (new editor UX)
+      quickFacts: quickFactsSchema.optional(),
+      caseStudy: caseStudySchema.optional(),
+      integrations: integrationsSchema.optional(),
+
+      // Flat fields kept for backward compatibility
       role: z.string().optional(),
       timeframe: z.string().optional(),
       stack: z.array(z.string()).default([]),

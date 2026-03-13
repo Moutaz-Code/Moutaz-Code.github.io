@@ -920,3 +920,42 @@ ShaderToy ShaderToyEmbed
 Case study sections
 MDX body
 ```
+
+## Phase 15D: CMS UX grouping for optional project fields
+
+### Goal
+
+Reduce scroll fatigue in Sveltia CMS by hiding non-essential project fields behind
+collapsible groups, while keeping published page output unchanged.
+
+### CMS structure (`public/admin/config.yml`)
+
+Project fields are grouped into three object sections:
+
+- `quickFacts` (expanded by default)
+  - `role`, `timeframe`, `stack`
+- `caseStudy` (collapsed by default)
+  - `highlights`, `results`, `problem`, `constraints`, `approach`, `architecture`, `challenges`, `lessons`, `nextSteps`
+- `integrations` (collapsed by default)
+  - `githubRepo`, `itchEmbedUrl`, `shaderToyId`
+
+This keeps the editor focused on title/summary/tags/media/body for bare-bones entries.
+
+### Backward compatibility
+
+`src/content/config.ts` and `src/adapters/content-mdx/MdxContentSource.ts` support both:
+
+- legacy flat frontmatter fields (`role`, `highlights`, `githubRepo`, ...)
+- new grouped fields (`quickFacts.*`, `caseStudy.*`, `integrations.*`)
+
+Adapter mapping prioritizes grouped values and falls back to legacy flat values,
+so existing content and page rendering behavior remain unchanged.
+
+### Local admin route notes
+
+Sveltia CMS is served from static assets in `public/admin/`:
+
+- Local dev URL: `/admin/index.html`
+- Production URL: `/admin` or `/admin/index.html` (host-dependent rewrite behavior)
+
+If `/admin` fails locally, use `/admin/index.html` explicitly.

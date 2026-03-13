@@ -215,72 +215,83 @@ collections:
           - { name: alt, label: Alt Text, widget: string, required: false }
           - { name: caption, label: Caption, widget: string, required: false }
 
-      # Case study fields (all optional)
-      - { name: role, label: Role, widget: string, required: false, hint: "Your role, e.g. 'Solo developer' or 'Frontend lead'" }
-      - { name: timeframe, label: Timeframe, widget: string, required: false, hint: "e.g. Oct 2025 – Present" }
-
-      - name: stack
-        label: Tech Stack
-        widget: list
+      # Quick Facts (shown on project sidebar card)
+      - name: quickFacts
+        label: Quick Facts
+        widget: object
         required: false
-        default: []
-        hint: "Technologies used (separate from browsing tags)"
+        collapsed: false
+        fields:
+          - { name: role, label: Role, widget: string, required: false, hint: "Your role, e.g. 'Solo developer' or 'Frontend lead'" }
+          - { name: timeframe, label: Timeframe, widget: string, required: false, hint: "e.g. Oct 2025 – Present" }
+          - name: stack
+            label: Tech Stack
+            widget: list
+            required: false
+            default: []
+            hint: "Technologies used (separate from browsing tags)"
 
-      - name: highlights
-        label: Highlights
-        widget: list
+      # Advanced case study fields (optional)
+      - name: caseStudy
+        label: Case Study (Optional)
+        widget: object
         required: false
-        default: []
-        hint: "3–6 key bullet points summarizing the project"
+        collapsed: true
+        fields:
+          - name: highlights
+            label: Highlights
+            widget: list
+            required: false
+            default: []
+            hint: "3–6 key bullet points summarizing the project"
+          - name: results
+            label: Results
+            widget: list
+            required: false
+            default: []
+            hint: "Measurable or concrete outcomes"
+          - { name: problem, label: Problem, widget: text, required: false, hint: "What problem does this project solve?" }
+          - name: constraints
+            label: Constraints
+            widget: list
+            required: false
+            default: []
+          - name: approach
+            label: Approach
+            widget: list
+            required: false
+            default: []
+          - name: architecture
+            label: Architecture
+            widget: list
+            required: false
+            default: []
+          - name: challenges
+            label: Challenges
+            widget: list
+            required: false
+            default: []
+          - name: lessons
+            label: Lessons Learned
+            widget: list
+            required: false
+            default: []
+          - name: nextSteps
+            label: Next Steps
+            widget: list
+            required: false
+            default: []
 
-      - name: results
-        label: Results
-        widget: list
+      # External integrations (optional)
+      - name: integrations
+        label: Integrations (Optional)
+        widget: object
         required: false
-        default: []
-        hint: "Measurable or concrete outcomes"
-
-      - { name: problem, label: Problem, widget: text, required: false, hint: "What problem does this project solve?" }
-
-      - name: constraints
-        label: Constraints
-        widget: list
-        required: false
-        default: []
-
-      - name: approach
-        label: Approach
-        widget: list
-        required: false
-        default: []
-
-      - name: architecture
-        label: Architecture
-        widget: list
-        required: false
-        default: []
-
-      - name: challenges
-        label: Challenges
-        widget: list
-        required: false
-        default: []
-
-      - name: lessons
-        label: Lessons Learned
-        widget: list
-        required: false
-        default: []
-
-      - name: nextSteps
-        label: Next Steps
-        widget: list
-        required: false
-        default: []
-
-      - { name: githubRepo, label: "GitHub Repo", widget: string, required: false, hint: "Format: owner/repo (e.g. Moutaz-Code/my-project)" }
-      - { name: itchEmbedUrl, label: "itch.io Embed URL", widget: string, required: false, hint: "Full iframe src URL from itch.io (e.g. https://itch.io/embed/12345)" }
-      - { name: shaderToyId, label: "ShaderToy ID", widget: string, required: false, hint: "Shader ID from ShaderToy (e.g. XsXXDn from shadertoy.com/view/XsXXDn)" }
+        collapsed: true
+        fields:
+          - { name: githubRepo, label: "GitHub Repo", widget: string, required: false, hint: "Format: owner/repo (e.g. Moutaz-Code/my-project)" }
+          - { name: itchEmbedUrl, label: "itch.io Embed URL", widget: string, required: false, hint: "Full iframe src URL from itch.io (e.g. https://itch.io/embed/12345)" }
+          - { name: shaderToyId, label: "ShaderToy ID", widget: string, required: false, hint: "Shader ID from ShaderToy (e.g. XsXXDn from shadertoy.com/view/XsXXDn)" }
 
       - { name: body, label: Body, widget: markdown }
 
