@@ -6,7 +6,7 @@
 - **Styling**: Tailwind CSS v4 (via `@tailwindcss/vite`)
 - **Language**: TypeScript (strict mode)
 - **Content**: MDX via Astro Content Collections
-- **CMS**: Sveltia CMS with Git backend (planned — later phase)
+- **CMS**: Sveltia CMS with Git backend (active)
 - **Deployment**: Vercel
 
 ## Module boundaries
@@ -36,6 +36,17 @@ Pages call a port interface (e.g. `ContentSource`) which is implemented by
 an adapter (`MdxContentSource`) for the MVP. The composition root in `src/app/`
 wires the chosen adapter. This keeps the system modular — the content backend
 can be swapped to a database or headless CMS without touching page code.
+
+## Working mode: micro-iterations
+
+To keep changes safe and easy to test, development follows a small-scope workflow:
+
+1. One small change per cycle (feature, fix, or doc update)
+2. Keep edits focused and avoid broad refactors
+3. Validate the changed area and stop when the target is complete
+4. Prefer additive changes over redesigns unless explicitly planned
+
+This project is intentionally evolved incrementally, not overhauled in single large commits.
 
 ## Phase 2: Route map locked
 
@@ -95,7 +106,7 @@ Display labels can be derived later. All tag links point to `/tags/<slug>`.
 ### Media convention
 
 Media paths use `/uploads/projects/` and `/uploads/posts/` under `public/`.
-This prepares for CMS media uploads in a later phase.
+This supports CMS media uploads via the same public paths.
 
 ### Slug handling
 
@@ -324,8 +335,8 @@ The `MdxContentSource` adapter was hardened for CMS-authored content:
 
 The canonical site URL is set in two places (keep them in sync):
 
-- `astro.config.mjs` → `site: "https://moutaz-code.github.io"`
-- `src/app/siteConfig.ts` → `siteUrl: "https://moutaz-code.github.io"`
+- `astro.config.mjs` → `site: "https://moutaz-code-github-io.vercel.app/"`
+- `src/app/siteConfig.ts` → `siteUrl: "https://moutaz-code-github-io.vercel.app/"`
 
 Astro exposes the configured `site` via `Astro.site` at build time. BaseLayout resolves
 the canonical URL from `Astro.site` with a fallback to `siteConfig.siteUrl`.
@@ -730,7 +741,7 @@ Made content schemas more forgiving for CMS-authored content.
 
 ### Tag registry
 
-`src/app/tagsRegistry.ts` — canonical registry of 120+ tags across 13 categories:
+`src/app/tagsRegistry.ts` — canonical registry of tags across 13 categories:
 
 | Category | Example tags |
 |---|---|
@@ -746,7 +757,7 @@ Made content schemas more forgiving for CMS-authored content.
 | AI/ML | AI, ML, deep-learning, NLP, computer-vision, LLM |
 | DevOps / IT | databases, Linux, Windows, networking |
 | Tools | Git, GitHub, Vercel, Docker, CI/CD |
-| Design | UI/UX, Figma, Blender, Photoshop, pixel-art |
+
 
 Each tag has: `slug` (canonical kebab-case), `label` (display name), `aliases[]` (alternative names), `category` (organizational grouping).
 
@@ -768,7 +779,7 @@ The function checks raw lowercase input against `ALIAS_TO_SLUG` *before* slugify
 
 ### CMS tag widget upgrade
 
-Both project and post tag fields changed from `widget: list` (free-text) to `widget: select` with `multiple: true` and all 120+ tags as categorized dropdown options. Users can search and multi-select without typing.
+Both project and post tag fields changed from `widget: list` (free-text) to `widget: select` with `multiple: true` and the full registry as categorized dropdown options. Users can search and multi-select without typing.
 
 ### Adapter integration
 
@@ -778,7 +789,8 @@ Both project and post tag fields changed from `widget: list` (free-text) to `wid
 
 ### Site config
 
-`src/app/siteConfig.ts` — added `strictTags: false` (allows unknown tags at build time).
+`src/app/siteConfig.ts` — includes `strictTags: false` as a policy flag.
+Build-time behavior remains warning-only via `scripts/check-tags.mjs` (unknown tags do not fail the build).
 
 ## Phase 15A: GitHub repo cards (build-time, cached)
 

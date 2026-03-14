@@ -34,6 +34,33 @@ const email = siteConfig.socialLinks.email?.replace("mailto:", "") ?? "";
       </div>
     )}
 
+    {(siteConfig.socialLinks.itch || siteConfig.socialLinks.shadertoy) && (
+      <div class="mb-10 flex flex-wrap gap-3">
+        {siteConfig.socialLinks.itch && (
+          <ButtonLink
+            href={siteConfig.socialLinks.itch}
+            variant="secondary"
+            external
+            magnetic
+            sfx="click"
+          >
+            itch.io
+          </ButtonLink>
+        )}
+        {siteConfig.socialLinks.shadertoy && (
+          <ButtonLink
+            href={siteConfig.socialLinks.shadertoy}
+            variant="secondary"
+            external
+            magnetic
+            sfx="click"
+          >
+            Shadertoy
+          </ButtonLink>
+        )}
+      </div>
+    )}
+
     <!-- Contact channels -->
     <div class="space-y-4 mb-12">
       {siteConfig.socialLinks.email && (
@@ -76,6 +103,30 @@ const email = siteConfig.socialLinks.email?.replace("mailto:", "") ?? "";
         >
           <span class="text-sm font-medium">LinkedIn</span>
           <span class="text-sm text-(--color-text-muted)">{siteConfig.socialLinks.linkedin}</span>
+          <span class="text-xs text-(--color-text-muted)">&#x2197;</span>
+        </a>
+      )}
+      {siteConfig.socialLinks.itch && (
+        <a
+          href={siteConfig.socialLinks.itch}
+          target="_blank"
+          rel="noreferrer"
+          class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
+        >
+          <span class="text-sm font-medium">itch.io</span>
+          <span class="text-sm text-(--color-text-muted)">{siteConfig.socialLinks.itch}</span>
+          <span class="text-xs text-(--color-text-muted)">&#x2197;</span>
+        </a>
+      )}
+      {siteConfig.socialLinks.shadertoy && (
+        <a
+          href={siteConfig.socialLinks.shadertoy}
+          target="_blank"
+          rel="noreferrer"
+          class="flex items-center gap-3 no-underline text-(--color-text) hover:text-(--color-accent) transition-colors"
+        >
+          <span class="text-sm font-medium">Shadertoy</span>
+          <span class="text-sm text-(--color-text-muted)">{siteConfig.socialLinks.shadertoy}</span>
           <span class="text-xs text-(--color-text-muted)">&#x2197;</span>
         </a>
       )}

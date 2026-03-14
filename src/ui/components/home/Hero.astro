@@ -1,6 +1,7 @@
 ---
 import ButtonLink from "../primitives/ButtonLink.astro";
 import { profileConfig } from "../../../app/profileConfig";
+import { siteConfig } from "../../../app/siteConfig";
 ---
 
 <section class="py-16 sm:py-24" data-reveal data-reveal-stagger="children">
@@ -31,4 +32,27 @@ import { profileConfig } from "../../../app/profileConfig";
       ))
     }
   </div>
+
+  {(siteConfig.socialLinks.email || siteConfig.socialLinks.linkedin) && (
+    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-(--color-text-muted)">
+      {siteConfig.socialLinks.email && (
+        <a
+          href={siteConfig.socialLinks.email}
+          class="no-underline hover:text-(--color-accent) transition-colors"
+        >
+          Email
+        </a>
+      )}
+      {siteConfig.socialLinks.linkedin && (
+        <a
+          href={siteConfig.socialLinks.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          class="no-underline hover:text-(--color-accent) transition-colors"
+        >
+          LinkedIn ↗
+        </a>
+      )}
+    </div>
+  )}
 </section>

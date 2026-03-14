@@ -7,10 +7,10 @@ export const siteConfig = {
 
   socialLinks: {
     github: "https://github.com/Moutaz-Code",
-    linkedin: "https://linkedin.com/in/moutaz",
-    email: "mailto:hello@example.com",
-    itch: undefined as string | undefined,
-    shadertoy: undefined as string | undefined,
+    linkedin: "https://www.linkedin.com/in/mou-taz-pharaon-8468b088/",
+    email: "mailto:moutaz.pharaon@gmail.com",
+    itch: "https://stalinsdietplan.itch.io/",
+    shadertoy: "https://www.shadertoy.com/user/Motaz",
   },
 
   navItems: [
