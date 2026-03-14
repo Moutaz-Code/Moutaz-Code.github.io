@@ -50,11 +50,11 @@ const relatedPosts = allPosts
     <div class="relative">
       <CornerFlourish position="top-right" />
       <CornerSpark position="top-right" />
-      <h1 class="text-3xl font-bold tracking-tight mb-3" data-reveal>{title}</h1>
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2 sm:mb-3" data-reveal>{title}</h1>
       <span data-pagefind-meta="type:Post" class="hidden"></span>
       <span data-pagefind-meta={`tags:${tags.join(",")}`} class="hidden"></span>
 
-      <div class="flex items-center gap-3 mb-6 text-sm text-(--color-text-muted) flex-wrap">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-5 sm:mb-6 text-sm text-(--color-text-muted)">
         {publishedAt && <time datetime={publishedAt.toISOString()}>{formattedDate}</time>}
         {publishedAt && tags.length > 0 && <span>&middot;</span>}
         <div class="flex gap-2 flex-wrap">
@@ -74,7 +74,7 @@ const relatedPosts = allPosts
       )
     }
 
-    <Prose>
+    <Prose class="prose-sm sm:prose-base">
       <Content />
     </Prose>
 
@@ -98,7 +98,7 @@ const relatedPosts = allPosts
       relatedPosts.length > 0 && (
         <div class="mt-10 pt-6 border-t border-(--color-border)">
           <h2 class="text-lg font-semibold mb-4">Related Posts</h2>
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {relatedPosts.map((rp) => (
               <PostCard
                 title={rp.title}

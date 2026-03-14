@@ -54,7 +54,7 @@ const channels = [
 
     <div class="grid gap-4 md:grid-cols-2 mb-12">
       {siteConfig.socialLinks.email && (
-        <Card class="p-5">
+        <Card class="p-4 sm:p-5">
           <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
               <p class="text-sm font-medium text-(--color-text)">Email</p>
@@ -79,7 +79,7 @@ const channels = [
 
       {
         channels.map((channel) => (
-          <Card href={channel.url} target="_blank" rel="noreferrer" class="p-5">
+          <Card href={channel.url} target="_blank" rel="noreferrer" class="p-4 sm:p-5">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
                 <p class="text-sm font-medium text-(--color-text)">{channel.label}</p>
