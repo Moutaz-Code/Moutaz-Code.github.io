@@ -56,17 +56,22 @@ const resolvedOgImage = new URL(
 ).href;
 const currentPath = Astro.url.pathname;
 
-const socialEntries = Object.entries(siteConfig.socialLinks).filter(
-  ([, url]) => url != null,
-) as [string, string][];
-
-const socialLabels: Record<string, string> = {
-  github: "GitHub",
-  linkedin: "LinkedIn",
-  email: "Email",
-  itch: "itch.io",
-  shadertoy: "Shadertoy",
-};
+const socialEntries: { label: string; url: string; external?: boolean }[] = [];
+if (siteConfig.socialLinks.email) {
+  socialEntries.push({ label: "Email", url: siteConfig.socialLinks.email });
+}
+if (siteConfig.socialLinks.linkedin) {
+  socialEntries.push({ label: "LinkedIn", url: siteConfig.socialLinks.linkedin, external: true });
+}
+if (siteConfig.socialLinks.github) {
+  socialEntries.push({ label: "GitHub", url: siteConfig.socialLinks.github, external: true });
+}
+if (siteConfig.socialLinks.itch) {
+  socialEntries.push({ label: "itch.io", url: siteConfig.socialLinks.itch, external: true });
+}
+if (siteConfig.socialLinks.shadertoy) {
+  socialEntries.push({ label: "Shadertoy", url: siteConfig.socialLinks.shadertoy, external: true });
+}
 ---
 
 <!doctype html>
@@ -187,15 +192,20 @@ const socialLabels: Record<string, string> = {
           &copy; {new Date().getFullYear()}
           {siteConfig.siteName}. All rights reserved.
         </p>
-        <div class="flex gap-4">
+        <div class="flex flex-wrap items-center gap-y-1 text-xs sm:text-sm">
           {
-            socialEntries.map(([key, url]) => (
-              <a
-                href={url}
-                class="no-underline text-(--color-text-muted) hover:text-(--color-text)"
-              >
-                {socialLabels[key] ?? key}
-              </a>
+            socialEntries.map((entry, index) => (
+              <>
+                {index > 0 && <span aria-hidden="true" class="mx-2 opacity-40">•</span>}
+                <a
+                  href={entry.url}
+                  {...(entry.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                  class="inline-flex items-center gap-1 no-underline/80 hover:no-underline text-(--color-text-muted) hover:text-(--color-text) transition-colors"
+                >
+                  <span>{entry.label}</span>
+                  {entry.external && <span aria-hidden="true" class="text-[0.72em] opacity-60">↗</span>}
+                </a>
+              </>
             ))
           }
         </div>

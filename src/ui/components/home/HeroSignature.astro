@@ -47,43 +47,50 @@ import { siteConfig } from "../../../app/siteConfig";
   <p class="text-lg text-(--color-text-muted) max-w-xl mb-8">
     {profileConfig.pitch}
   </p>
-  <div class="flex gap-4 relative">
-    <!-- Bloom glow behind CTAs -->
-    <div class="hero-bloom" data-hero-bloom aria-hidden="true"></div>
-    {
-      profileConfig.ctas.map((cta) => (
-        <ButtonLink
-          href={cta.href}
-          variant={cta.variant}
-          cursorLabel={cta.variant === "primary" ? "Explore" : undefined}
-          magnetic={cta.variant === "primary"}
-        >
-          {cta.label}
-        </ButtonLink>
-      ))
-    }
-  </div>
-
-  {(siteConfig.socialLinks.email || siteConfig.socialLinks.linkedin) && (
-    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-(--color-text-muted)">
-      {siteConfig.socialLinks.email && (
-        <a
-          href={siteConfig.socialLinks.email}
-          class="no-underline hover:text-(--color-accent) transition-colors"
-        >
-          Email
-        </a>
-      )}
-      {siteConfig.socialLinks.linkedin && (
-        <a
-          href={siteConfig.socialLinks.linkedin}
-          target="_blank"
-          rel="noreferrer"
-          class="no-underline hover:text-(--color-accent) transition-colors"
-        >
-          LinkedIn ↗
-        </a>
-      )}
+  <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
+    <div class="flex gap-4 relative">
+      <!-- Bloom glow behind CTAs -->
+      <div class="hero-bloom" data-hero-bloom aria-hidden="true"></div>
+      {
+        profileConfig.ctas.map((cta) => (
+          <ButtonLink
+            href={cta.href}
+            variant={cta.variant}
+            cursorLabel={cta.variant === "primary" ? "Explore" : undefined}
+            magnetic={cta.variant === "primary"}
+          >
+            {cta.label}
+          </ButtonLink>
+        ))
+      }
     </div>
-  )}
+
+    {(siteConfig.socialLinks.email || siteConfig.socialLinks.linkedin) && (
+      <div class="flex flex-wrap items-center gap-y-2 text-xs sm:text-sm text-(--color-text-muted)">
+        <span class="mr-2 text-[0.72em] uppercase tracking-wide opacity-70">Quick links:</span>
+        {siteConfig.socialLinks.email && (
+          <a
+            href={siteConfig.socialLinks.email}
+            class="no-underline/80 hover:no-underline text-(--color-text-muted) hover:text-(--color-text) transition-colors"
+          >
+            Email
+          </a>
+        )}
+        {siteConfig.socialLinks.email && siteConfig.socialLinks.linkedin && (
+          <span aria-hidden="true" class="mx-2 opacity-40">•</span>
+        )}
+        {siteConfig.socialLinks.linkedin && (
+          <a
+            href={siteConfig.socialLinks.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-1 no-underline/80 hover:no-underline text-(--color-text-muted) hover:text-(--color-text) transition-colors"
+          >
+            <span>LinkedIn</span>
+            <span aria-hidden="true" class="text-[0.72em] opacity-60">↗</span>
+          </a>
+        )}
+      </div>
+    )}
+  </div>
 </section>
