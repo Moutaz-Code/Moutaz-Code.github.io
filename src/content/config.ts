@@ -52,7 +52,7 @@ const projects = defineCollection({
       title: z.string().min(1),
       summary: z.string().default(""),
       tags: z.array(z.string().min(1)).default([]),
-      status: z.enum(["ongoing", "completed"]).default("ongoing"),
+      status: z.enum(["ongoing", "completed", "coming-soon"]).default("ongoing"),
       featured: z.boolean().default(false),
 
       slug: z.string().min(1).optional(),
@@ -106,6 +106,7 @@ const projects = defineCollection({
     ),
 });
 
+
 const posts = defineCollection({
   type: "content",
   schema: z.object({
@@ -115,6 +116,7 @@ const posts = defineCollection({
     publishedAt: z.coerce.date().optional(),
     slug: z.string().min(1).optional(),
     coverImage: z.string().min(1).optional(),
+    status: z.enum(["coming-soon"]).optional(),
   }),
 });
 
