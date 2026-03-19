@@ -177,6 +177,7 @@ collections:
         options:
           - { label: Ongoing, value: ongoing }
           - { label: Completed, value: completed }
+          - { label: Coming Soon, value: coming-soon }
         default: ongoing
 
       - { name: featured, label: Featured, widget: boolean, default: false }
