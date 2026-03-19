@@ -8,7 +8,7 @@ import pagefind from 'astro-pagefind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://moutaz-code-github-io.vercel.app/',
+  site: 'https://moutaz.vercel.app/',
 
   vite: {
     plugins: [tailwindcss()]

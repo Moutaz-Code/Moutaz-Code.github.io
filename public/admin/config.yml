@@ -2,10 +2,10 @@ backend:
   name: github
   repo: Moutaz-Code/Moutaz-Code.github.io
   branch: main
-  base_url: https://moutaz-code-github-io.vercel.app
+  base_url: https://moutaz.vercel.app
   auth_endpoint: /api/auth
 
-site_url: https://moutaz-code-github-io.vercel.app
+site_url: https://moutaz.vercel.app
 
 # Cloudinary media library (client-side config)
 # cloud_name and api_key are OK here. Never include api_secret.

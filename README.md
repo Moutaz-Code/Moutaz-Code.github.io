@@ -2,7 +2,7 @@
 
 Personal portfolio + technical blog built with Astro, TypeScript, and MDX.
 
-Live site: https://moutaz-code-github-io.vercel.app/
+Live site: https://moutaz.vercel.app/
 
 ## Stack
 

@@ -335,8 +335,8 @@ The `MdxContentSource` adapter was hardened for CMS-authored content:
 
 The canonical site URL is set in two places (keep them in sync):
 
-- `astro.config.mjs` → `site: "https://moutaz-code-github-io.vercel.app/"`
-- `src/app/siteConfig.ts` → `siteUrl: "https://moutaz-code-github-io.vercel.app/"`
+- `astro.config.mjs` → `site: "https://moutaz.vercel.app/"`
+- `src/app/siteConfig.ts` → `siteUrl: "https://moutaz.vercel.app/"`
 
 Astro exposes the configured `site` via `Astro.site` at build time. BaseLayout resolves
 the canonical URL from `Astro.site` with a fallback to `siteConfig.siteUrl`.
